@@ -5,18 +5,8 @@ import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
 
-function PingPongGame() {
-
-  const right = {
-    right:"0",
-    top:"115px"
-  }
-  const left = {
-    left:"0",
-    top:"115px"
-  }
-
-  const [getTop, setTop] = useState(50);
+export function PingPongPVCOM() {
+    const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
   const [horizontalDirection, setHorizontalDirection] = useState(2); // Velocità orizzontale aumentata
@@ -152,14 +142,6 @@ function PingPongGame() {
       setPaddleLeftY(paddleLeftY + 10)
       console.log(paddleLeftY);
     }
-    if (key == "o") {
-      setPaddleRightY(paddleRightY + 10)
-      console.log(paddleRightY);
-    }
-    if (key == "k") {
-      setPaddleRightY(paddleRightY - 10)
-      console.log(paddleRightY);
-    }
 
 console.log(key);
   }, [e])
@@ -182,5 +164,3 @@ return (
   </div>
 );
 }
-
-export default PingPongGame;
