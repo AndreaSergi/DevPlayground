@@ -30,15 +30,15 @@ body {
     background-color: #ffffff;
 }
 
-.paddle.left {
-    top: 40%;
+ .paddle.left {
+     top: 40px; 
     left: 0;
-}
+} 
 
-.paddle.right {
-    top: 40%;
+ .paddle.right {
+     top: 40px; 
     right: 0;
-}
+} 
 
 .ball {
     position: absolute;

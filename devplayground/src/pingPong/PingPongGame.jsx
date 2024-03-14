@@ -5,6 +5,16 @@ import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
 
 function PingPongGame() {
+
+  const right = {
+    right:"0",
+    top:"115px"
+  }
+  const left = {
+    left:"0",
+    top:"115px"
+  }
+
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -133,50 +143,43 @@ function PingPongGame() {
     setE(e + 1)
   }
   useEffect(() => {
-    if (key == "w") {
+    if (key == "arrowUp") {
+      setPaddleLeftY(paddleLeftY - 10)
+      console.log(paddleLeftY);
+    }
+    if (key == "arrowDown") {
       setPaddleLeftY(paddleLeftY + 10)
       console.log(paddleLeftY);
-    } else {
-      if (key == "s") {
-        setPaddleLeftY(paddleLeftY - 10)
-        console.log(paddleLeftY);
-      } else {
-        if (key == "o") {
-          setPaddleRightY(paddleRightY + 10)
-          console.log(paddleRightY);
-        } else {
-          if (key == "k") {
-            setPaddleRightY(paddleRightY - 10)
-            console.log(paddleRightY);
-          }
-        }
-
-      }
-
+    }/*
+    if (key == "o") {
+      setPaddleRightY(paddleRightY + 10)
+      console.log(paddleRightY);
     }
+    if (key == "k") {
+      setPaddleRightY(paddleRightY - 10)
+      console.log(paddleRightY);
+    }*/
 
-    console.log(key);
+console.log(key);
   }, [e])
-  return (
-    <>
-      <div tabIndex={0} onKeyDown={handleKeyDown}>
-        <h2>1: {score.player} 2: {score.opponent}</h2>
-        <PingPong>
-          <Campo>
-            <Paddle
-              position="left"
-              style={{ top: `${paddleLeftY}px`, left: "0" }}
-            />
-            <Paddle
-              position="right"
-              style={{ top: `${paddleRightY}px`, right: "0" }}
-            />
-            <Ball style={styleMod} />
-          </Campo>
-        </PingPong>
-      </div>
-    </>
-  );
+return (
+  <div tabIndex={0} onKeyDown={handleKeyDown}>
+    <h2>1: {score.player} 2: {score.opponent}</h2>
+    <PingPong>
+      <Campo>
+        <Paddle
+          position="left"
+          style={{ top: `${paddleLeftY}px`, left: "0" }}
+        />
+        <Paddle
+          position="right"
+          style={{ top: `${paddleRightY}px`, right: "0" }}
+        />
+        <Ball style={styleMod} />
+      </Campo>
+    </PingPong>
+  </div>
+);
 }
 
 export default PingPongGame;
