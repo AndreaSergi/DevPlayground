@@ -1,0 +1,76 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.tastiera{
+    display: flex;
+    margin-top: 20px;
+    width: 800px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.parolaCorretta{
+    color: white;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.first-row{
+    display: flex;
+    margin-bottom: 5px;
+}
+.second-row{
+    display: flex;
+    margin-bottom: 5px;
+}
+.third-row{
+    display: flex;
+
+}
+
+.button{
+    height: 58px;
+    width: 58px;
+    background-color: lightslategrey;
+    color: white;
+    border-radius: 3px;
+    border: 1px solid white;
+    margin: 2px;
+}
+.button:hover{
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.main-grid{
+    display: flex;
+    border: 1px solid red;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: black;
+    gap: 30px;
+}
+
+h1{
+    color: white;
+}
+
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid blue;
+    margin: 5px;
+    height: 62px;
+    width: 62px;
+}
