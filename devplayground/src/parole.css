@@ -48,6 +48,7 @@
 
 .main-grid{
     display: flex;
+    flex-direction: column;
     border: 1px solid red;
 }
 
@@ -73,4 +74,9 @@ h1{
     margin: 5px;
     height: 62px;
     width: 62px;
+    color: white;
+}
+
+.wordCellsContainer{
+    display: flex;
 }

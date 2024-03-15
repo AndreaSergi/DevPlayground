@@ -1,16 +1,16 @@
 import { RowGrid } from "./RowGrid";
 
-export function ParoleGrid(){
-
+export function ParoleGrid({lettera}){
 
 
     return(
         <div className="main-grid">
-            <RowGrid/>
-            <RowGrid/>
-            <RowGrid/>
-            <RowGrid/>
-            <RowGrid/>
+            <RowGrid lettera={lettera}/>
+            <RowGrid lettera={lettera}/>
+            <RowGrid lettera={lettera}/>
+            <RowGrid lettera={lettera}/>
+            <RowGrid lettera={lettera}/>
+            <RowGrid lettera={lettera}/>
         </div>
 
     )
