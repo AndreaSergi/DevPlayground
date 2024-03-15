@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Escludere la cartella 'logs'
+#src/default
+#index.html

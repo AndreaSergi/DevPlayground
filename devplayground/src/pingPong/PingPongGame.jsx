@@ -1,186 +1,108 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, createContext, StrictMode } from "react";
+import React, { useState, useEffect } from "react";
 import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
+import "./pingPongGame.css";
+import { Punteggio } from "./Punteggio";
 
 function PingPongGame() {
-
-  const right = {
-    right:"0",
-    top:"115px"
-  }
-  const left = {
-    left:"0",
-    top:"115px"
-  }
-
-  const [getTop, setTop] = useState(50);
-  const [getLeft, setLeft] = useState(50);
-  const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
-  const [horizontalDirection, setHorizontalDirection] = useState(2); // Velocità orizzontale aumentata
+  const [ballPosition, setBallPosition] = useState({ top: 50, left: 50 });
+  const [ballDirection, setBallDirection] = useState({ vertical: 2, horizontal: 2 });
   const [score, setScore] = useState({ player: 0, opponent: 0 });
-  let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
-  let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
+  const [paddleLeftY, setPaddleLeftY] = useState(115);
+  const [paddleRightY, setPaddleRightY] = useState(115);
 
-  // Funzione per controllare se la pallina ha colpito un paddle
-  const checkPaddleHit = (
-    ballPos,
-    paddlePos,
-    paddleHeight,
-    paddleWidth,
-    ballSize
-  ) => {
-    const ballLeft = ballPos.x;
-    const ballRight = ballPos.x + ballSize;
-    const ballTop = ballPos.y;
-    const ballBottom = ballPos.y + ballSize;
-
-    const paddleLeft = paddlePos.x;
-    const paddleRight = paddlePos.x + paddleWidth;
-    const paddleTop = paddlePos.y;
-    const paddleBottom = paddlePos.y + paddleHeight;
-
-    return (
-      ballRight >= paddleLeft &&
-      ballLeft <= paddleRight &&
-      ballBottom >= paddleTop &&
-      ballTop <= paddleBottom
-    );
+  const updatePaddlePosition = (key) => {
+    switch (key) {
+      case "ArrowUp":
+        setPaddleLeftY((y) => Math.max(y - 10, 0));
+        break;
+      case "ArrowDown":
+        setPaddleLeftY((y) => Math.min(y + 10, 430));
+        break;
+      case "o":
+        setPaddleRightY((y) => Math.min(y + 10, 430));
+        break;
+      case "k":
+        setPaddleRightY((y) => Math.max(y - 10, 0));
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "ArrowUp") {
-        setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
-      } else if (event.key === "ArrowDown") {
-        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
+    const handleKeyDown = ({ key }) => {
+      if (key === 'ArrowUp') {
+        setPaddleLeftY((y) => Math.max(y - 10, 0));
+      } else if (key === 'ArrowDown') {
+        setPaddleLeftY((y) => Math.min(y + 10, 450 - 70));
+      } else if (key === 'o') {
+        setPaddleRightY((y) => Math.min(y + 10, 450 - 70));
+      } else if (key === 'k') {
+        setPaddleRightY((y) => Math.max(y - 10, 0));
       }
     };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+  
+  
 
   useEffect(() => {
+    console.log(ballPosition)
     const interval = setInterval(() => {
-      setTop((prevTop) => {
-        let newTop = prevTop + verticalDirection;
-        if (newTop >= 285 || newTop <= 0) {
-          newTop = prevTop;
-          setVerticalDirection(-verticalDirection);
+      setBallPosition((prevPosition) => {
+        let { top, left } = prevPosition;
+        let newDirection = { ...ballDirection };
+
+        // Aggiorna la posizione della pallina
+        top += newDirection.vertical;
+        left += newDirection.horizontal;
+
+        // Controlla collisioni con i bordi del campo
+        if (top >= 430 || top <= 0) {
+          newDirection.vertical = -newDirection.vertical;
         }
-        return newTop;
+        if (left <= 0 || left >= 950) {
+          newDirection.horizontal = -newDirection.horizontal;
+          setScore((prevScore) => {
+            return left <= 0
+              ? { ...prevScore, opponent: prevScore.opponent + 1 }
+              : { ...prevScore, player: prevScore.player + 1 };
+          });
+          left = 475; // Resetta la posizione della pallina
+        }
+
+        // Aggiorna la direzione della pallina se necessario
+        setBallDirection(newDirection);
+        return { top, left };
       });
 
-      setLeft((prevLeft) => {
-        let newLeft = prevLeft + horizontalDirection;
-        const ballPos = { x: newLeft, y: getTop };
-        const paddleLeftPos = { x: 0, y: paddleLeftY };
-        const paddleRightPos = { x: 585, y: paddleRightY };
-        const paddleHeight = 70;
-        const paddleWidth = 10;
-        const ballSize = 15;
-
-        if (
-          checkPaddleHit(
-            ballPos,
-            paddleLeftPos,
-            paddleHeight,
-            paddleWidth,
-            ballSize
-          ) ||
-          checkPaddleHit(
-            ballPos,
-            paddleRightPos,
-            paddleHeight,
-            paddleWidth,
-            ballSize
-          )
-        ) {
-          newLeft = prevLeft;
-          setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= 585) {
-          if (newLeft <= 0) {
-            setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
-          } else {
-            setScore((score) => ({ ...score, player: score.player + 1 }));
-          }
-          newLeft = 50;
-        }
-        return newLeft;
-      });
-
+      // Aggiorna la posizione del paddle destro
       setPaddleRightY((prevY) => {
-        const deltaY = getTop - prevY - 35;
-        if (deltaY > 0) {
-          return Math.min(prevY + 10, 230);
-        } else if (deltaY < 0) {
-          return Math.max(prevY - 10, 0);
-        }
-        return prevY;
+        const deltaY = ballPosition.top - prevY - 35;
+        return deltaY > 0 ? Math.min(prevY + 10, 450) : deltaY < 0 ? Math.max(prevY - 10, 0) : prevY;
       });
     }, 25);
 
     return () => clearInterval(interval);
-  }, [getTop, verticalDirection, horizontalDirection]);
-
-  const styleMod = {
-    top: `${getTop}px`,
-    left: `${getLeft}px`,
-  };
-
-  // Funzione per controllare i padlle
-
-  const [key, setKey] = useState(null);
-  const [e, setE] = useState(0);
-
-  function handleKeyDown(event) {
-    setKey(event.key);
-    setE(e + 1)
-  }
-  useEffect(() => {
-    if (key == "arrowUp") {
-      setPaddleLeftY(paddleLeftY - 10)
-      console.log(paddleLeftY);
-    }
-    if (key == "arrowDown") {
-      setPaddleLeftY(paddleLeftY + 10)
-      console.log(paddleLeftY);
-    }
-    if (key == "o") {
-      setPaddleRightY(paddleRightY + 10)
-      console.log(paddleRightY);
-    }
-    if (key == "k") {
-      setPaddleRightY(paddleRightY - 10)
-      console.log(paddleRightY);
-    }
-
-console.log(key);
-  }, [e])
-return (
-  <div tabIndex={0} onKeyDown={handleKeyDown}>
-    <h2>Punteggio - Giocatore: {score.player} - PC: {score.opponent}</h2>
-    <PingPong>
-      <Campo>
-        <Paddle
-          position="left"
-          style={{ top: `${paddleLeftY}px`, left: "0" }}
-        />
-        <Paddle
-          position="right"
-          style={{ top: `${paddleRightY}px`, right: "0" }}
-        />
-        <Ball style={styleMod} />
-      </Campo>
-    </PingPong>
-  </div>
-);
+  }, [ballPosition, ballDirection]);
+  return (
+    <div className="containerTable" tabIndex={0} onKeyDown={(e) => updatePaddlePosition(e.key)}>
+      <Punteggio player={score.player} opponent={score.opponent} />
+      <PingPong>
+        <Campo>
+          <Paddle position="left" style={{ top: `${paddleLeftY}px`, left: "0" }} />
+          <Paddle position="right" style={{ top: `${paddleRightY}px`, right: "0" }} />
+          <Ball style={{ top: `${ballPosition.top}px`, left: `${ballPosition.left}px` }} />
+        </Campo>
+      </PingPong>
+    </div>
+  );
 }
 
 export default PingPongGame;
