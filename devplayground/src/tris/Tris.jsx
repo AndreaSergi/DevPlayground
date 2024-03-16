@@ -1,5 +1,5 @@
-import { TrisLogo } from "./TrisLogo";
-import { TrisButton } from "./TrisButton";
+import { TrisLogo } from "./TrisLogo/TrisLogo";
+import { TrisButton } from "./TrisButton/TrisButton";
 import style from "./Tris.module.css";
 
 export function Tris() {
