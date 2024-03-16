@@ -1,7 +1,23 @@
 .button {
-
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 8px;
+  width: 50%;
+  text-align: center;
+  letter-spacing: 3px;
+  text-indent: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button:hover {
   cursor: pointer;
+}
+
+.button svg {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
 }
