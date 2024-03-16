@@ -1,22 +1,22 @@
+import { useState } from "react";
 import { TrisLogo } from "./TrisLogo/TrisLogo";
 import { TrisButton } from "./TrisButton/TrisButton";
 import { TrisInlineButton } from "./TrisInlineButton/TrisInlineButton";
 import style from "./Tris.module.css";
 import lightStyle from "./TrisLight.module.css";
 import darkStyle from "./TrisDark.module.css";
-import { useState } from "react";
 
 export function Tris() {
   const [dark, setDark] = useState(false);
 
-  const themeStyle = dark ? darkStyle.page : lightStyle.page;
+  const themeStyle = dark ? darkStyle : lightStyle;
 
   function toggleTheme() {
     setDark((prevDark) => !prevDark);
   }
 
   return (
-    <div className={`${themeStyle} ${style.page}`}>
+    <div className={`${themeStyle.page} ${style.page}`}>
       <div className={style.container}>
         <TrisLogo />
         <TrisButton>3x3</TrisButton>
