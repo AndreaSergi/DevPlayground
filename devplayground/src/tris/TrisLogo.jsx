@@ -1,3 +1,7 @@
 export function TrisLogo() {
-  return <p>Tris</p>
+  const textStyle = {
+    textTransform: 'uppercase'
+  };
+
+  return <p style={textStyle}>tris</p>;
 }

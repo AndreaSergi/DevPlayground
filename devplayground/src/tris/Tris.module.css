@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Genos";
 }
 
 .themeButton {
