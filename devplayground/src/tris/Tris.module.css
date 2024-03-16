@@ -6,6 +6,7 @@
 }
 
 .page {
+  background-color: var(--tris-background-color);
   height: 100vh;
   position: relative;
   display: flex;
