@@ -1,3 +1,7 @@
 .page {
-  --tris-background-color: #FFFFFF;
+  --tris-background-color: #FFF;
+  --tris-text-color: #000;
+  --tris-button-border-color: #000;
+  --tris-button-svg-color: #000;
+  --tris-logo-svg-color: #000;
 }
