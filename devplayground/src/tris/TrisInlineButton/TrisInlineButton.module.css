@@ -1,0 +1,14 @@
+.button {
+  letter-spacing: 3px;
+  text-indent: 3px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button svg {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
