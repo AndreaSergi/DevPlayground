@@ -3,13 +3,16 @@
   border: 1px solid var(--tris-button-border-color);
   border-radius: 15px;
   padding: 8px;
-  width: 50%;
+  width: 180px;
   text-align: center;
   letter-spacing: 3px;
   text-indent: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 24px;
+  animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .button:hover {
@@ -21,4 +24,30 @@
   height: 30px;
   margin: 0 10px;
   fill: var(--tris-button-svg-color);
+}
+
+/* animation slide-in-bottom (button) */
+@-webkit-keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+            transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+            transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
 }
