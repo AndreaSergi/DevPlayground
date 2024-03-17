@@ -1,6 +1,7 @@
 .button {
   letter-spacing: 3px;
   text-indent: 3px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button:hover {

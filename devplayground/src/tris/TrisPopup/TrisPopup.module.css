@@ -25,4 +25,9 @@
   top: 0;
   right: 0;
   padding: 20px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.closeButton:hover {
+  cursor: pointer;
 }
