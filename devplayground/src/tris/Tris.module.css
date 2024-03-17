@@ -22,10 +22,3 @@
   right: 24px;
   top: 24px;
 }
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
