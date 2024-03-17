@@ -1,0 +1,28 @@
+.container {
+  background-color: var(--tris-background-color);
+  border: 1px solid var(--tris-popup-border-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  inset: 0;
+  height: fit-content;
+  margin: auto;
+  font-size: 20px;
+}
+
+.container p {
+  padding: 8px 0;
+}
+
+.content {
+  position: relative;
+  padding: 40px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}

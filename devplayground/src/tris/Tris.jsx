@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TrisLogo } from "./TrisLogo/TrisLogo";
 import { TrisButton } from "./TrisButton/TrisButton";
 import { TrisInlineButton } from "./TrisInlineButton/TrisInlineButton";
+import { TrisPopup } from "./TrisPopup/TrisPopup";
 import style from "./Tris.module.css";
 import lightStyle from "./TrisLight.module.css";
 import darkStyle from "./TrisDark.module.css";
@@ -80,6 +81,7 @@ export function Tris() {
           )}
         </TrisInlineButton>
       </div>
+      <TrisPopup />
     </div>
   );
 }
