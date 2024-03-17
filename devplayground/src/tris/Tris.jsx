@@ -30,7 +30,7 @@ export function Tris() {
       <div className={style.container}>
         <TrisLogo />
         <TrisButton>3x3</TrisButton>
-        <TrisButton>
+        <TrisButton link="/tris/game">
           <svg
             className={style.buttonIcon}
             viewBox="0 0 24 24"

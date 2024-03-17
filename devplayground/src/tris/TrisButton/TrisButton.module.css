@@ -11,6 +11,8 @@
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  text-decoration: none;
+  color: inherit;
   animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   -webkit-animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
