@@ -21,6 +21,10 @@ export function Tris() {
     setPopupShown(true);
   }
 
+  function hidePopup() {
+    setPopupShown(false);
+  }
+
   return (
     <div className={`${themeStyle.page} ${style.page}`}>
       <div className={style.container}>
@@ -86,7 +90,7 @@ export function Tris() {
           )}
         </TrisInlineButton>
       </div>
-      {popupShown && <TrisPopup />}
+      {popupShown && <TrisPopup onCloseButtonClick={hidePopup} />}
     </div>
   );
 }

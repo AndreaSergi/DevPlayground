@@ -1,6 +1,6 @@
 import style from "./TrisPopup.module.css";
 
-export function TrisPopup() {
+export function TrisPopup({ onCloseButtonClick }) {
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -11,7 +11,7 @@ export function TrisPopup() {
         </p>
         <p>Il simbolo del giocatore 1 è X e quello dell'avversario è O.</p>
         <p>Il gioco termina quando tutte le caselle sono state riempite.</p>
-        <div className={style.closeButton}>X</div>
+        <div className={style.closeButton} onClick={onCloseButtonClick}>X</div>
       </div>
     </div>
   );
