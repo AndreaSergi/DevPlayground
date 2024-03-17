@@ -9,11 +9,16 @@ import darkStyle from "./TrisDark.module.css";
 
 export function Tris() {
   const [dark, setDark] = useState(false);
+  const [popupShown, setPopupShown] = useState(false);
 
   const themeStyle = dark ? darkStyle : lightStyle;
 
   function toggleTheme() {
     setDark((prevDark) => !prevDark);
+  }
+
+  function showPopup() {
+    setPopupShown(true);
   }
 
   return (
@@ -46,7 +51,7 @@ export function Tris() {
             />
           </svg>
         </TrisButton>
-        <TrisButton>Rules</TrisButton>
+        <TrisButton onClick={showPopup}>Rules</TrisButton>
       </div>
       <div className={style.themeButton}>
         <TrisInlineButton onClick={toggleTheme}>
@@ -81,7 +86,7 @@ export function Tris() {
           )}
         </TrisInlineButton>
       </div>
-      {/* <TrisPopup /> */}
+      {popupShown && <TrisPopup />}
     </div>
   );
 }
