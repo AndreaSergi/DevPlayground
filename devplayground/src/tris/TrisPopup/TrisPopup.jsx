@@ -10,7 +10,7 @@ export function TrisPopup({ onCloseButtonClick }) {
           diagonale) per vincere.
         </p>
         <p>Il simbolo del giocatore 1 è X e quello dell'avversario è O.</p>
-        <p>Il gioco termina quando tutte le caselle sono state riempite.</p>
+        <p>Il gioco termina quando tutte le caselle sono state riempite o quando qualcuno fa tris.</p>
         <div className={style.closeButton} onClick={onCloseButtonClick}>X</div>
       </div>
     </div>
