@@ -4,25 +4,18 @@ import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
+import { Punteggio } from "./Punteggio";
 
-function PingPongGame() {
-
-  const right = {
-    right:"0",
-    top:"115px"
-  }
-  const left = {
-    left:"0",
-    top:"115px"
-  }
-
+export function PingPongGame() {
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
-  const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
-  const [horizontalDirection, setHorizontalDirection] = useState(2); // Velocità orizzontale aumentata
+  const [verticalDirection, setVerticalDirection] = useState(2);
+  const [horizontalDirection, setHorizontalDirection] = useState(2);
   const [score, setScore] = useState({ player: 0, opponent: 0 });
-  let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
-  let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
+  let [paddleLeftY, setPaddleLeftY] = useState(115);
+  let [paddleRightY, setPaddleRightY] = useState(115);
+  const larghezzaCampo = 900
+  const altezzaCampo = 450
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -55,7 +48,7 @@ function PingPongGame() {
       if (event.key === "ArrowUp") {
         setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
       } else if (event.key === "ArrowDown") {
-        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
+        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
       }
     };
 
@@ -70,7 +63,7 @@ function PingPongGame() {
     const interval = setInterval(() => {
       setTop((prevTop) => {
         let newTop = prevTop + verticalDirection;
-        if (newTop >= 285 || newTop <= 0) {
+        if (newTop >= altezzaCampo - 15 || newTop <= 0) {
           newTop = prevTop;
           setVerticalDirection(-verticalDirection);
         }
@@ -81,7 +74,7 @@ function PingPongGame() {
         let newLeft = prevLeft + horizontalDirection;
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
-        const paddleRightPos = { x: 585, y: paddleRightY };
+        const paddleRightPos = { x: larghezzaCampo - 10, y: paddleRightY };
         const paddleHeight = 70;
         const paddleWidth = 10;
         const ballSize = 15;
@@ -104,7 +97,7 @@ function PingPongGame() {
         ) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= 585) {
+        } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
           if (newLeft <= 0) {
             setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
           } else {
@@ -118,7 +111,7 @@ function PingPongGame() {
       setPaddleRightY((prevY) => {
         const deltaY = getTop - prevY - 35;
         if (deltaY > 0) {
-          return Math.min(prevY + 10, 230);
+          return Math.min(prevY + 10, altezzaCampo);
         } else if (deltaY < 0) {
           return Math.max(prevY - 10, 0);
         }
@@ -141,46 +134,36 @@ function PingPongGame() {
 
   function handleKeyDown(event) {
     setKey(event.key);
-    setE(e + 1)
+    setE(e + 1);
   }
   useEffect(() => {
     if (key == "arrowUp") {
-      setPaddleLeftY(paddleLeftY - 10)
+      setPaddleLeftY(paddleLeftY - 10);
       console.log(paddleLeftY);
     }
     if (key == "arrowDown") {
-      setPaddleLeftY(paddleLeftY + 10)
+      setPaddleLeftY(paddleLeftY + 10);
       console.log(paddleLeftY);
     }
-    if (key == "o") {
-      setPaddleRightY(paddleRightY + 10)
-      console.log(paddleRightY);
-    }
-    if (key == "k") {
-      setPaddleRightY(paddleRightY - 10)
-      console.log(paddleRightY);
-    }
 
-console.log(key);
-  }, [e])
-return (
-  <div tabIndex={0} onKeyDown={handleKeyDown}>
-    <h2>Punteggio - Giocatore: {score.player} - PC: {score.opponent}</h2>
-    <PingPong>
-      <Campo>
-        <Paddle
-          position="left"
-          style={{ top: `${paddleLeftY}px`, left: "0" }}
-        />
-        <Paddle
-          position="right"
-          style={{ top: `${paddleRightY}px`, right: "0" }}
-        />
-        <Ball style={styleMod} />
-      </Campo>
-    </PingPong>
-  </div>
-);
+    console.log(key);
+  }, [e]);
+  return (
+    <div tabIndex={0} onKeyDown={handleKeyDown}>
+      <Punteggio player={score.player} opponent={score.opponent}/>
+      <PingPong>
+        <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
+          <Paddle
+            position="left"
+            style={{ top: `${paddleLeftY}px`, left: "0" }}
+          />
+          <Paddle
+            position="right"
+            style={{ top: `${paddleRightY}px`, right: "0" }}
+          />
+          <Ball style={styleMod} />
+        </Campo>
+      </PingPong>
+    </div>
+  );
 }
-
-export default PingPongGame;

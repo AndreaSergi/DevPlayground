@@ -1,5 +1,6 @@
-export function Campo({ children }) {
+/* eslint-disable react/prop-types */
+export function Campo({ children, style }) {
     return (
-        <div className="campo">{children}</div>
+        <div style={style} className="campo">{children}</div>
     )
 }
