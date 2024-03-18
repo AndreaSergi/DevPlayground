@@ -4,22 +4,22 @@ import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
-import { SingleScore } from "./singleScore";
+import { SingleScore } from "./SingleScore"
+import './pingpong.css'
 
 export function PingPongPVCOM() {
   const larghezzaCampo = 900
   const altezzaCampo = 450
-  const name = "giocatore"
+  const name = "Giocatore"
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
-  const [horizontalDirection, setHorizontalDirection] = useState(2); // Velocità orizzontale aumentata
+  const [horizontalDirection, setHorizontalDirection] = useState(1); // Velocità orizzontale aumentata
   const [score, setScore] = useState(0);
   let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
   let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
 
   // Funzione per controllare se la pallina ha colpito un paddle
-
   const checkPaddleHit = (
     ballPos,
     paddlePos,
@@ -93,7 +93,7 @@ export function PingPongPVCOM() {
       setPaddleRightY((prevY) => {
         const deltaY = getTop - prevY - 35;
         if (deltaY > 0) {
-          return Math.min(prevY + 10, altezzaCampo - 70);
+          return Math.min(prevY + 10, 230);
         } else if (deltaY < 0) {
           return Math.max(prevY - 10, 0);
         }
@@ -114,7 +114,7 @@ export function PingPongPVCOM() {
     if (event.key === "ArrowUp") {
       setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
     } else if (event.key === "ArrowDown") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
+      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
     }
   };
   useEffect(() => {
@@ -145,68 +145,6 @@ export function PingPongPVCOM() {
 
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTop((prevTop) => {
-        let newTop = prevTop + verticalDirection;
-        if (newTop >= altezzaCampo - 15 || newTop <= 0) {
-          newTop = prevTop;
-          setVerticalDirection(-verticalDirection);
-        }
-        return newTop;
-      });
-
-      setLeft((prevLeft) => {
-        let newLeft = prevLeft + horizontalDirection;
-        const ballPos = { x: newLeft, y: getTop };
-        const paddleLeftPos = { x: 0, y: paddleLeftY };
-        const paddleRightPos = { x: larghezzaCampo - 10, y: paddleRightY };
-        const paddleHeight = 70;
-        const paddleWidth = 10;
-        const ballSize = 15;
-
-        if (
-          checkPaddleHit(
-            ballPos,
-            paddleLeftPos,
-            paddleHeight,
-            paddleWidth,
-            ballSize
-          ) ||
-          checkPaddleHit(
-            ballPos,
-            paddleRightPos,
-            paddleHeight,
-            paddleWidth,
-            ballSize
-          )
-        ) {
-          newLeft = prevLeft;
-          setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
-          if (newLeft <= 0) {
-            setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
-          } else {
-            setScore((score) => ({ ...score, player: score.player + 1 }));
-          }
-          newLeft = 50;
-        }
-        return newLeft;
-      });
-
-      setPaddleRightY((prevY) => {
-        const deltaY = getTop - prevY - 35;
-        if (deltaY > 0) {
-          return Math.min(prevY + 10, altezzaCampo);
-        } else if (deltaY < 0) {
-          return Math.max(prevY - 10, 0);
-        }
-        return prevY;
-      });
-    }, 25);
-
-    return () => clearInterval(interval);
-  }, [getTop, verticalDirection, horizontalDirection]);
-  useEffect(() => {
     if (horizontalDirection > 0) {
       setHorizontalDirection(horizontalDirection + moltiplicatore);
     } else {
@@ -222,14 +160,11 @@ export function PingPongPVCOM() {
     console.log(verticalDirection);
     console.log(moltiplicatore);
   }, [moltiplicatore])
-
-
-
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <SingleScore namePlayer={name} player={score} />
+      <SingleScore namePlayer={name} player={score}/>
       <PingPong>
-        <Campo>
+        <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
