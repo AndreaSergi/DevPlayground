@@ -4,14 +4,19 @@ export function TrisPopup({ onCloseButtonClick }) {
   return (
     <div className={style.container}>
       <div className={style.content}>
-        <p>Il gioco si svolge su una griglia composta da 3x3 caselle.</p>
+        <p>The game takes place on a grid made up of 3x3 squares.</p>
+        <p>Player 1's symbol is X and his opponent's is O.</p>
         <p>
-          Disponi per primo 3 o 4 simboli in fila (orizzontale, verticale o
-          diagonale) per vincere.
+          Be the first to place 3 or 4 symbols in a row (horizontally,
+          vertically or diagonally) to win.
         </p>
-        <p>Il simbolo del giocatore 1 è X e quello dell'avversario è O.</p>
-        <p>Il gioco termina quando tutte le caselle sono state riempite o quando qualcuno fa tris.</p>
-        <div className={style.closeButton} onClick={onCloseButtonClick}>X</div>
+        <p>
+          The game ends when all the boxes have been filled or when someone gets
+          three of a kind.
+        </p>
+        <div className={style.closeButton} onClick={onCloseButtonClick}>
+          X
+        </div>
       </div>
     </div>
   );
