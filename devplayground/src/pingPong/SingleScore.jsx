@@ -18,7 +18,6 @@ export function SingleScore({ player, namePlayer }) {
     
     
       const score = {
-        marginLeft: "10%",
         display: "flex",
         flexDirection: "horizontal",
       }
