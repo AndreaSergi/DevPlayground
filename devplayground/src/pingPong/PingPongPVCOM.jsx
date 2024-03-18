@@ -4,8 +4,12 @@ import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
+import { SingleScore } from "./singleScore";
 
 export function PingPongPVCOM() {
+  const larghezzaCampo = 900
+  const altezzaCampo = 450
+  const name = "giocatore"
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -89,7 +93,7 @@ export function PingPongPVCOM() {
       setPaddleRightY((prevY) => {
         const deltaY = getTop - prevY - 35;
         if (deltaY > 0) {
-          return Math.min(prevY + 10, 230);
+          return Math.min(prevY + 10, altezzaCampo - 70);
         } else if (deltaY < 0) {
           return Math.max(prevY - 10, 0);
         }
@@ -110,7 +114,7 @@ export function PingPongPVCOM() {
     if (event.key === "ArrowUp") {
       setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
     } else if (event.key === "ArrowDown") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
+      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
     }
   };
   useEffect(() => {
@@ -141,6 +145,68 @@ export function PingPongPVCOM() {
 
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setTop((prevTop) => {
+        let newTop = prevTop + verticalDirection;
+        if (newTop >= altezzaCampo - 15 || newTop <= 0) {
+          newTop = prevTop;
+          setVerticalDirection(-verticalDirection);
+        }
+        return newTop;
+      });
+
+      setLeft((prevLeft) => {
+        let newLeft = prevLeft + horizontalDirection;
+        const ballPos = { x: newLeft, y: getTop };
+        const paddleLeftPos = { x: 0, y: paddleLeftY };
+        const paddleRightPos = { x: larghezzaCampo - 10, y: paddleRightY };
+        const paddleHeight = 70;
+        const paddleWidth = 10;
+        const ballSize = 15;
+
+        if (
+          checkPaddleHit(
+            ballPos,
+            paddleLeftPos,
+            paddleHeight,
+            paddleWidth,
+            ballSize
+          ) ||
+          checkPaddleHit(
+            ballPos,
+            paddleRightPos,
+            paddleHeight,
+            paddleWidth,
+            ballSize
+          )
+        ) {
+          newLeft = prevLeft;
+          setHorizontalDirection(-horizontalDirection);
+        } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
+          if (newLeft <= 0) {
+            setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
+          } else {
+            setScore((score) => ({ ...score, player: score.player + 1 }));
+          }
+          newLeft = 50;
+        }
+        return newLeft;
+      });
+
+      setPaddleRightY((prevY) => {
+        const deltaY = getTop - prevY - 35;
+        if (deltaY > 0) {
+          return Math.min(prevY + 10, altezzaCampo);
+        } else if (deltaY < 0) {
+          return Math.max(prevY - 10, 0);
+        }
+        return prevY;
+      });
+    }, 25);
+
+    return () => clearInterval(interval);
+  }, [getTop, verticalDirection, horizontalDirection]);
+  useEffect(() => {
     if (horizontalDirection > 0) {
       setHorizontalDirection(horizontalDirection + moltiplicatore);
     } else {
@@ -161,7 +227,7 @@ export function PingPongPVCOM() {
 
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <h2>Punteggio: {score}</h2>
+      <SingleScore namePlayer={name} player={score} />
       <PingPong>
         <Campo>
           <Paddle

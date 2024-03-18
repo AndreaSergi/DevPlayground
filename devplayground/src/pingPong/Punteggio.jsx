@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-export function Punteggio({ player, opponent }) {
+export function Punteggio({ player, opponent, namePlayer1, namePlayer2 }) {
   const scoreStyle = {
     padding: "10px",
     margin: "10px 0",
@@ -28,10 +28,11 @@ export function Punteggio({ player, opponent }) {
   }
 
   return (
-    <div style={scoreStyle}>
+    <>
+      <div style={scoreStyle}>
       <div style={sx}>
         <div style={{marginRight: "30px"}}>
-          <h2>Giocatore</h2>
+          <h2>{namePlayer1}</h2>
           <h3>{player}</h3>
         </div>
         <img src="vite.svg" alt="avatar giocatore" />
@@ -39,10 +40,12 @@ export function Punteggio({ player, opponent }) {
       <div style={dx}>
         <img src="vite.svg" alt="avatar pc" />
         <div style={{marginLeft: "30px"}}>
-          <h2>PC</h2>
+          <h2>{namePlayer2}</h2>
           <h3>{opponent}</h3>
         </div>
       </div>
     </div>
+    </>
+    
   );
 }

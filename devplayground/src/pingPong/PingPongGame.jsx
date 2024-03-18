@@ -9,8 +9,8 @@ import { Punteggio } from "./Punteggio";
 export function PingPongGame() {
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
-  const [verticalDirection, setVerticalDirection] = useState(2);
-  const [horizontalDirection, setHorizontalDirection] = useState(2);
+  const [verticalDirection, setVerticalDirection] = useState(4);
+  const [horizontalDirection, setHorizontalDirection] = useState(3);
   const [score, setScore] = useState({ player: 0, opponent: 0 });
   let [paddleLeftY, setPaddleLeftY] = useState(115);
   let [paddleRightY, setPaddleRightY] = useState(115);
@@ -44,13 +44,19 @@ export function PingPongGame() {
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "ArrowUp") {
-        setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
+    // Funzione per controllare i padlle
+  const handleKeyDown = (event) => {
+    if (event.key === "w") {
+      setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
+    } else if (event.key === "s") {
+      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
+    }
+    if (event.key === "ArrowUp") {
+        setPaddleRightY((paddleRightY) => Math.max(paddleRightY - 10, 0));
       } else if (event.key === "ArrowDown") {
-        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
+        setPaddleRightY((paddleRightY) => Math.min(paddleRightY + 10, 230));
       }
-    };
+  };
 
     window.addEventListener("keydown", handleKeyDown);
 
