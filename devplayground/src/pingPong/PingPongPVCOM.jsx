@@ -66,12 +66,15 @@ export function PingPongPVCOM() {
           setHorizontalDirection(-horizontalDirection)
           
         }
-        if (newLeft <= 11) {
-          console.log("fermare la pallina")
-          setVerticalDirection(0)
-          setHorizontalDirection(0)
-          console.log(score)
-          setCheck(false)
+        if (newLeft <= 9) {
+
+            console.log("fermare la pallina");
+            console.log(score);
+          
+          setVerticalDirection(0);
+          setHorizontalDirection(0);
+          
+          setCheck(false);
         }
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
