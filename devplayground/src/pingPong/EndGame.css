@@ -1,0 +1,24 @@
+.container-end-game{
+    position: absolute;
+    left: 35%;
+    top: 40%;
+    z-index: 100;
+
+    width: 350px;
+    height: 200px;
+
+    border: 2px solid white;
+    border-radius: 16px;
+    background-color: rgb(77, 148, 253);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.btn-end-game{
+    width: 50%;
+}

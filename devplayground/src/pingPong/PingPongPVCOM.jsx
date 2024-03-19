@@ -6,11 +6,12 @@ import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
 import { SingleScore } from "./SingleScore"
 import './pingpong.css'
+import { EndGame } from "./EndGame";
 
 export function PingPongPVCOM() {
   const larghezzaCampo = 900
   const altezzaCampo = 450
-  const name = "Time"
+  const name = "Giocatore"
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -19,7 +20,11 @@ export function PingPongPVCOM() {
   let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
   let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
 
-  let [getCheck, setCheck] = useState(true)
+  let [getCheck, setCheck] = useState(true); //state utilizzato per verificare la fine della partita
+
+  let[key,setKey]=useState(0); // state utilizzato per le key relative al salvataggio dati al sassion storage
+
+  let [sessionData,setSessionData]=useState(0)
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -66,13 +71,18 @@ export function PingPongPVCOM() {
           setHorizontalDirection(-horizontalDirection)
           
         }
+
+        //FINE PARTITA
         if (newLeft <= 9) {
 
-            console.log("fermare la pallina");
-            console.log(score);
+          console.log("fermare la pallina");
+          console.log(score);
           
           setVerticalDirection(0);
           setHorizontalDirection(0);
+
+          sessionStorage.setItem(key,{name:name , score:score , data: new Date});
+          setKey(key+1);
           
           setCheck(false);
         }
@@ -157,9 +167,6 @@ export function PingPongPVCOM() {
     if (getCheck) {
       setScore(score + 1 * moltiplicatore);
     }
-    
-    
-
   }, 1000);
 
   setTimeout(() => {
@@ -202,6 +209,7 @@ export function PingPongPVCOM() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
+      {!getCheck && <EndGame score={score}/>}
     </div>
   );
 }
