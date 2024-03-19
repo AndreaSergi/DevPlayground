@@ -1,4 +1,4 @@
-.container-end-game{
+.pop-up{
     position: absolute;
     left: 35%;
     top: 40%;
@@ -7,9 +7,10 @@
     width: 350px;
     height: 200px;
 
-    border: 2px solid white;
+    border: 2px solid #dbb906;
     border-radius: 16px;
-    background-color: rgb(77, 148, 253);
+    background-color: #292929;
+    color: #dbb906;
 
     display: flex;
     flex-direction: column;
@@ -19,6 +20,9 @@
     gap: 8px;
 }
 
-.btn-end-game{
-    width: 50%;
+.btn-pop-up{
+    background-color: #dbb906;
+    color: #292929;
+    font-weight: bold;
 }
+

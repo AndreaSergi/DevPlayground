@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, createContext, StrictMode } from "react";
+import React, { useState, useEffect } from "react";
 import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
 import { Punteggio } from "./Punteggio";
 import './pingpong.css'
+import "./pop-up.css"
 
 export function PingPongPVP() {
   const [getTop, setTop] = useState(50);
@@ -19,6 +20,12 @@ export function PingPongPVP() {
   const altezzaCampo = 450
   const nameGiocatore1 = "Giocatore1"
   const nameGiocatore2 = "Giocatore2"
+
+  let [goal, setGoal] = useState(""); // state utilizzato per assegnare il giocatore che ha appena ottenuto il punto
+
+  let [getCheck, setCheck] = useState(true); //state utilizzato per frezzare la partita
+
+  let [checkEndGame, setCheckEndGame] = useState(false); //state utilizzato per verificare la fine della partita
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -48,18 +55,18 @@ export function PingPongPVP() {
 
   useEffect(() => {
     // Funzione per controllare i padlle
-  const handleKeyDown = (event) => {
-    if (event.key === "w") {
-      setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
-    } else if (event.key === "s") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
-    }
-    if (event.key === "ArrowUp") {
+    const handleKeyDown = (event) => {
+      if (event.key === "w") {
+        setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
+      } else if (event.key === "s") {
+        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
+      }
+      if (event.key === "ArrowUp") {
         setPaddleRightY((paddleRightY) => Math.max(paddleRightY - 10, 0));
       } else if (event.key === "ArrowDown") {
         setPaddleRightY((paddleRightY) => Math.min(paddleRightY + 10, altezzaCampo - 70));
       }
-  };
+    };
 
     window.addEventListener("keydown", handleKeyDown);
 
@@ -109,15 +116,17 @@ export function PingPongPVP() {
         } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
           if (newLeft <= 0) {
             setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
+            setCheck(false);
           } else {
             setScore((score) => ({ ...score, player: score.player + 1 }));
+            setCheck(false);
           }
           newLeft = 50;
         }
         return newLeft;
       });
 
-      
+
     }, 25);
 
     return () => clearInterval(interval);
@@ -128,32 +137,37 @@ export function PingPongPVP() {
     left: `${getLeft}px`,
   };
 
-  // Funzione per controllare i padlle
 
-  const [key, setKey] = useState(null);
-  const [e, setE] = useState(0);
-
-  function handleKeyDown(event) {
-    setKey(event.key);
-    setE(e + 1);
-  }
+  // FREEZE GAME
   useEffect(() => {
-    if (key == "arrowUp") {
-      setPaddleLeftY(paddleLeftY - 10);
-      console.log(paddleLeftY);
+    if (!getCheck) {
+      setVerticalDirection(0);
+      setHorizontalDirection(0);
+    } else {
+      setVerticalDirection(4);
+      setHorizontalDirection(3);
     }
-    if (key == "arrowDown") {
-      setPaddleLeftY(paddleLeftY + 10);
-      console.log(paddleLeftY);
-    }
+  }, [getCheck])
+  // Assegnazione nome del giocatore che ha appena ottunuto il punto
+  useEffect(() => {
+    setGoal(nameGiocatore2);
+  }, [score.opponent])
 
-    console.log(key);
-  }, [e]);
+  useEffect(() => {
+    setGoal(nameGiocatore1);
+  }, [score.player])
+
+  useEffect(() => {
+    if (score.opponent || score.player == 10) {
+      setCheckEndGame(true)
+    }
+  }, [score.opponent, score.player])
+
   return (
-    <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <Punteggio player={score.player} opponent={score.opponent} namePlayer1={nameGiocatore1} namePlayer2={nameGiocatore2}/>
+    <div>
+      <Punteggio player={score.player} opponent={score.opponent} namePlayer1={nameGiocatore1} namePlayer2={nameGiocatore2} />
       <PingPong>
-        <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
+        <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -165,6 +179,25 @@ export function PingPongPVP() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
+      {/* pop-up assegnazione punteggio */}
+      {!getCheck && !checkEndGame &&
+
+        <div className="pop-up">
+          <h2>Punto assegnato a: {goal} !</h2>
+          <h3>Punteggio attuale: {score.player} - {score.opponent}</h3>
+          <button onClick={() => { setCheck(true) }} className="btn-pop-up">Continua</button>
+        </div>
+      }
+
+
+      {/* pop-up fine partita */}
+      {checkEndGame &&
+        <div className="pop-up">
+          <h2>Game Over!</h2>
+          <h3>Vince : {goal}</h3>
+          <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false);}} className="btn-goal">Rivincita</button>
+          <button className="btn-pop-up">Menù Principale</button>
+        </div>}
     </div>
   );
 }
