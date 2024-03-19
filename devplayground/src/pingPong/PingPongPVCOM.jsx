@@ -15,10 +15,11 @@ export function PingPongPVCOM() {
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
   const [horizontalDirection, setHorizontalDirection] = useState(1); // Velocità orizzontale aumentata
-  const [scoreMinutes, setScoreMinutes] = useState(0);
-  const [scoreSeconds, setScoreSeconds] = useState(0);
+  const [score, setScore] = useState(0);
   let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
   let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
+
+  let [getCheck, setCheck] = useState(true)
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -51,7 +52,7 @@ export function PingPongPVCOM() {
     const interval = setInterval(() => {
       setTop((prevTop) => {
         let newTop = prevTop + verticalDirection;
-        if (newTop >= altezzaCampo || newTop <= 0) {
+        if (newTop >= altezzaCampo - 10 || newTop <= 0) {
           newTop = prevTop;
           setVerticalDirection(-verticalDirection);
         }
@@ -60,10 +61,17 @@ export function PingPongPVCOM() {
 
       setLeft((prevLeft) => {
         let newLeft = prevLeft + horizontalDirection;
-        if (newLeft >= larghezzaCampo || newLeft <= 0) {
+        if (newLeft >= larghezzaCampo - 20 || newLeft <= 0) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection)
           
+        }
+        if (newLeft <= 11) {
+          console.log("fermare la pallina")
+          setVerticalDirection(0)
+          setHorizontalDirection(0)
+          console.log(score)
+          setCheck(false)
         }
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
@@ -141,14 +149,14 @@ export function PingPongPVCOM() {
     clearInterval(id1)
   }, (1000 * 60));
   // calcolo score
+  
   let id2 = setInterval(() => {
-    setScoreSeconds(scoreSeconds + 1 * moltiplicatore);
-    if (scoreSeconds > 59) {
-      setScoreSeconds(0);
-      setScoreMinutes(scoreMinutes + 1 * moltiplicatore);
-    }else {
-      setScoreSeconds(scoreSeconds + 1 * moltiplicatore);
+    if (getCheck) {
+      setScore(score + 1 * moltiplicatore);
     }
+    
+    
+
   }, 1000);
 
   setTimeout(() => {
@@ -157,24 +165,27 @@ export function PingPongPVCOM() {
 
 
   useEffect(() => {
-    if (horizontalDirection > 0) {
-      setHorizontalDirection(horizontalDirection + moltiplicatore);
+    if (moltiplicatore <= 3) {
+      if (horizontalDirection > 0) {
+        setHorizontalDirection(horizontalDirection + moltiplicatore);
+      } else {
+        setHorizontalDirection(horizontalDirection - moltiplicatore);
+      }
+      if (verticalDirection > 0) {
+        setVerticalDirection(verticalDirection + moltiplicatore);
+      } else {
+        setVerticalDirection(verticalDirection - moltiplicatore);
+      }
     } else {
-      setHorizontalDirection(horizontalDirection - moltiplicatore);
-    }
-    if (verticalDirection > 0) {
-      setVerticalDirection(verticalDirection + moltiplicatore);
-    } else {
-      setVerticalDirection(verticalDirection - moltiplicatore);
+      console.log("velocità massima raggiunta")
     }
 
-
-    console.log(verticalDirection);
-    console.log(moltiplicatore);
+    console.log(`velocità ${verticalDirection}`);
+    console.log(`minuti trascorsi ${moltiplicatore}`);
   }, [moltiplicatore])
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <SingleScore namePlayer={name} player={`${scoreMinutes}:${scoreSeconds}`}/>
+      <SingleScore namePlayer={name} player={`${score}`}/>
       <PingPong>
         <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
           <Paddle
