@@ -1,14 +1,35 @@
 import { useState } from "react";
 import {InputButton} from "./InputButton"
 
+
 export function Tastiera(){
     const [cellIndex, setCellIndex] = useState(0);
+    const [rowIndex, setRowIndex] = useState(0)
+    const [stringa, setStringa ] = useState("")
+
+    let arrayParole1 = []
+
+    function handleInvio(){
+        if(rowIndex <= 5){
+            setRowIndex(rowIndex + 1)
+            setCellIndex(0)
+            arrayParole1.push(stringa)
+            console.log(stringa)
+        }
+    }
+
+    function handleDelete(){
+        setStringa(stringa.substring(0 , cellIndex))
+        setCellIndex(cellIndex - 1)
+    }
+
+
 
     return(
         <div className="tastiera">
             <div className="first-row">
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="Q"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="W"/>
+                <InputButton rowIndex={rowIndex} cellIndex={cellIndex} setStringa={setStringa} setCellIndex={setCellIndex} lettera="Q"/>
+                <InputButton rowIndex={rowIndex} cellIndex={cellIndex} setStringa={setStringa} setCellIndex={setCellIndex} lettera="W"/>
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="E"/>
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="R"/>
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="T"/>
@@ -41,8 +62,8 @@ export function Tastiera(){
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="B"/>
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="N"/>
                 <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="M"/>
-                <InputButton lettera="INVIO"/>
-                <InputButton lettera={<img width="50" height="50" src="https://img.icons8.com/ios/50/000000/backspace.png" alt="backspace"/>}/>
+                <InputButton lettera="INVIO" clickFunction={handleInvio}/>
+                <InputButton clickFunction={handleDelete} lettera={<img width="50" height="50" src="https://img.icons8.com/ios/50/000000/backspace.png" alt="backspace"/>}/>
 
             </div>
         </div>
