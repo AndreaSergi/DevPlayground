@@ -4,18 +4,26 @@ import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
+import { SingleScore } from "./SingleScore"
+import './pingpong.css'
 
 export function PingPongPVCOM() {
+  const larghezzaCampo = 900
+  const altezzaCampo = 450
+  const name = "Giocatore"
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
-  const [horizontalDirection, setHorizontalDirection] = useState(2); // Velocità orizzontale aumentata
+  const [horizontalDirection, setHorizontalDirection] = useState(1); // Velocità orizzontale aumentata
   const [score, setScore] = useState(0);
   let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
   let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
 
-  // Funzione per controllare se la pallina ha colpito un paddle
+  let [getCheck, setCheck] = useState(true); //state utilizzato per verificare la fine della partita
 
+  let [key, setKey] = useState(0); // state utilizzato per le key relative al salvataggio dati al sassion storage
+
+  // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
     ballPos,
     paddlePos,
@@ -46,7 +54,7 @@ export function PingPongPVCOM() {
     const interval = setInterval(() => {
       setTop((prevTop) => {
         let newTop = prevTop + verticalDirection;
-        if (newTop >= 285 || newTop <= 0) {
+        if (newTop >= altezzaCampo - 10 || newTop <= 0) {
           newTop = prevTop;
           setVerticalDirection(-verticalDirection);
         }
@@ -55,9 +63,29 @@ export function PingPongPVCOM() {
 
       setLeft((prevLeft) => {
         let newLeft = prevLeft + horizontalDirection;
+        if (newLeft >= larghezzaCampo - 20 || newLeft <= 0) {
+          newLeft = prevLeft;
+          setHorizontalDirection(-horizontalDirection)
+
+        }
+
+        //FINE PARTITA
+        if (newLeft <= 9) {
+
+          //console.log("fermare la pallina");
+          //console.log(score);
+          setCheck(false);
+          setVerticalDirection(0);
+          setHorizontalDirection(0);
+
+          sessionStorage.setItem(key, { name: name, score: score, data: new Date });
+          setKey(key + 1);
+
+
+        }
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
-        const paddleRightPos = { x: 585, y: paddleRightY };
+        const paddleRightPos = { x: larghezzaCampo, y: paddleRightY };
         const paddleHeight = 70;
         const paddleWidth = 10;
         const ballSize = 15;
@@ -80,7 +108,7 @@ export function PingPongPVCOM() {
         ) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= 585) {
+        } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
           newLeft = 50;
         }
         return newLeft;
@@ -89,7 +117,7 @@ export function PingPongPVCOM() {
       setPaddleRightY((prevY) => {
         const deltaY = getTop - prevY - 35;
         if (deltaY > 0) {
-          return Math.min(prevY + 10, 230);
+          return Math.min(prevY + 10, altezzaCampo - 70);
         } else if (deltaY < 0) {
           return Math.max(prevY - 10, 0);
         }
@@ -110,7 +138,7 @@ export function PingPongPVCOM() {
     if (event.key === "ArrowUp") {
       setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
     } else if (event.key === "ArrowDown") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
+      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
     }
   };
   useEffect(() => {
@@ -122,17 +150,24 @@ export function PingPongPVCOM() {
 
   // SCORE FUNCTION
   const [moltiplicatore, setMoltiplicatore] = useState(1);
+  if (getCheck) {
+
+  }
   // definizione di moltiplicatore 
   let id1 = setInterval(() => {
     setMoltiplicatore(moltiplicatore + 1)
+    console.log("interval 2");
   }, (1000 * 60));
 
   setTimeout(() => {
     clearInterval(id1)
   }, (1000 * 60));
   // calcolo score
+
   let id2 = setInterval(() => {
-    setScore(score + 1 * moltiplicatore);
+    if (getCheck) {
+      setScore(score + 1 * moltiplicatore);
+    }
   }, 1000);
 
   setTimeout(() => {
@@ -141,29 +176,29 @@ export function PingPongPVCOM() {
 
 
   useEffect(() => {
-    if (horizontalDirection > 0) {
-      setHorizontalDirection(horizontalDirection + moltiplicatore);
+    if (moltiplicatore <= 3) {
+      if (horizontalDirection > 0) {
+        setHorizontalDirection(horizontalDirection + moltiplicatore);
+      } else {
+        setHorizontalDirection(horizontalDirection - moltiplicatore);
+      }
+      if (verticalDirection > 0) {
+        setVerticalDirection(verticalDirection + moltiplicatore);
+      } else {
+        setVerticalDirection(verticalDirection - moltiplicatore);
+      }
     } else {
-      setHorizontalDirection(horizontalDirection - moltiplicatore);
-    }
-    if (verticalDirection > 0) {
-      setVerticalDirection(verticalDirection + moltiplicatore);
-    } else {
-      setVerticalDirection(verticalDirection - moltiplicatore);
+      console.log("velocità massima raggiunta")
     }
 
-
-    console.log(verticalDirection);
-    console.log(moltiplicatore);
+    console.log(`velocità ${verticalDirection}`);
+    console.log(`minuti trascorsi ${moltiplicatore}`);
   }, [moltiplicatore])
-
-
-
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <h2>Punteggio: {score}</h2>
+      <SingleScore namePlayer={name} player={`${score}`} />
       <PingPong>
-        <Campo>
+        <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -175,6 +210,12 @@ export function PingPongPVCOM() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
+      {!getCheck && <div className="pop-up">
+        <h2>Game Over!</h2>
+        <h3>Il tuo punteggio: {score}</h3>
+        <button className="btn-pop-up">Menù principale</button>
+        <button className="btn-pop-up" onClick={() => { window.location.reload() }}>Nuova partita</button>
+      </div>}
     </div>
   );
 }
