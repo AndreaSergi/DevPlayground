@@ -10,7 +10,7 @@ import './pingpong.css'
 export function PingPongPVCOM() {
   const larghezzaCampo = 900
   const altezzaCampo = 450
-  const name = "Time"
+  const name = "Giocatore"
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -19,7 +19,9 @@ export function PingPongPVCOM() {
   let [paddleLeftY, setPaddleLeftY] = useState(115); // Posizione iniziale paddle sinistro
   let [paddleRightY, setPaddleRightY] = useState(115); // Posizione iniziale paddle destro
 
-  let [getCheck, setCheck] = useState(true)
+  let [getCheck, setCheck] = useState(true); //state utilizzato per verificare la fine della partita
+
+  let [key, setKey] = useState(0); // state utilizzato per le key relative al salvataggio dati al sassion storage
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -64,17 +66,22 @@ export function PingPongPVCOM() {
         if (newLeft >= larghezzaCampo - 20 || newLeft <= 0) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection)
-          
+
         }
+
+        //FINE PARTITA
         if (newLeft <= 9) {
 
-            console.log("fermare la pallina");
-            console.log(score);
-          
+          //console.log("fermare la pallina");
+          //console.log(score);
+          setCheck(false);
           setVerticalDirection(0);
           setHorizontalDirection(0);
-          
-          setCheck(false);
+
+          sessionStorage.setItem(key, { name: name, score: score, data: new Date });
+          setKey(key + 1);
+
+
         }
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
@@ -143,23 +150,24 @@ export function PingPongPVCOM() {
 
   // SCORE FUNCTION
   const [moltiplicatore, setMoltiplicatore] = useState(1);
+  if (getCheck) {
+
+  }
   // definizione di moltiplicatore 
   let id1 = setInterval(() => {
     setMoltiplicatore(moltiplicatore + 1)
+    console.log("interval 2");
   }, (1000 * 60));
 
   setTimeout(() => {
     clearInterval(id1)
   }, (1000 * 60));
   // calcolo score
-  
+
   let id2 = setInterval(() => {
     if (getCheck) {
       setScore(score + 1 * moltiplicatore);
     }
-    
-    
-
   }, 1000);
 
   setTimeout(() => {
@@ -188,9 +196,9 @@ export function PingPongPVCOM() {
   }, [moltiplicatore])
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <SingleScore namePlayer={name} player={`${score}`}/>
+      <SingleScore namePlayer={name} player={`${score}`} />
       <PingPong>
-        <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
+        <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -202,6 +210,12 @@ export function PingPongPVCOM() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
+      {!getCheck && <div className="pop-up">
+        <h2>Game Over!</h2>
+        <h3>Il tuo punteggio: {score}</h3>
+        <button className="btn-pop-up">Menù principale</button>
+        <button className="btn-pop-up" onClick={() => { window.location.reload() }}>Nuova partita</button>
+      </div>}
     </div>
   );
 }

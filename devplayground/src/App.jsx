@@ -5,7 +5,7 @@ import { PingPongPVP } from './pingPong/PingPongPVP'
 
 function App() {
   return (
-    <PingPongPVCOM/>
+    <PingPongPVP/>
   )
 }
 
