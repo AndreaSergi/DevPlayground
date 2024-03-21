@@ -8,7 +8,7 @@ import { Punteggio } from "./Punteggio";
 import './pingpong.css'
 import "./pop-up.css"
 
-export function PingPongPVP() {
+function PingPongPVP() {
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(4);
@@ -201,3 +201,5 @@ export function PingPongPVP() {
     </div>
   );
 }
+
+export default PingPongPVP

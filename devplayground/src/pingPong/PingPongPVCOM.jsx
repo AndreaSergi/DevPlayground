@@ -7,7 +7,7 @@ import { Ball } from "./Ball";
 import { SingleScore } from "./SingleScore"
 import './pingpong.css'
 
-export function PingPongPVCOM() {
+function PingPongPVCOM() {
   const larghezzaCampo = 900
   const altezzaCampo = 450
   const name = "Giocatore"
@@ -151,7 +151,7 @@ export function PingPongPVCOM() {
   // SCORE FUNCTION
   const [moltiplicatore, setMoltiplicatore] = useState(1);
   if (getCheck) {
-
+    console.log(getCheck)
   }
   // definizione di moltiplicatore 
   let id1 = setInterval(() => {
@@ -219,3 +219,5 @@ export function PingPongPVCOM() {
     </div>
   );
 }
+
+export default PingPongPVCOM
