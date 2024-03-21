@@ -80,3 +80,7 @@ h1{
 .wordCellsContainer{
     display: flex;
 }
+
+.row{
+    display: flex;
+}

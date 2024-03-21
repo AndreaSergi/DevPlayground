@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {InputButton} from "./InputButton"
 
 
@@ -6,66 +6,65 @@ export function Tastiera(){
     const [cellIndex, setCellIndex] = useState(0);
     const [rowIndex, setRowIndex] = useState(0)
     const [stringa, setStringa ] = useState("")
+    const [arrayParole1, setArrayParole1] = useState([])
+    
+    const rows = [
+        ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+        ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'INVIO', 'DELETE']
+    ];
 
-    let arrayParole1 = []
+
 
     function handleInvio(){
         if(rowIndex <= 5){
-            setRowIndex(rowIndex + 1)
-            setCellIndex(0)
-            arrayParole1.push(stringa)
-            console.log(stringa)
+            setRowIndex(rowIndex + 1);
+            setCellIndex(0);
+            setArrayParole1(prevArray => [...prevArray, stringa]);
+            setStringa("");
         }
     }
 
-    function handleDelete(){
-        setStringa(stringa.substring(0 , cellIndex))
-        setCellIndex(cellIndex - 1)
+
+    
+    useEffect(() => {
+        console.log("Array of words:", arrayParole1);
+    }, [arrayParole1]);
+
+
+
+    function handleDelete() {
+        const wordCells = document.querySelectorAll('.wordCellsContainer')[rowIndex].children;
+    
+        if (cellIndex > 0) {
+            wordCells[cellIndex - 1].innerText = "";
+            
+            setCellIndex(cellIndex - 1);
+
+            setStringa(prevStringa => prevStringa.slice(0, -1));
+    
+        }
     }
 
 
 
-    return(
+    return (
         <div className="tastiera">
-            <div className="first-row">
-                <InputButton rowIndex={rowIndex} cellIndex={cellIndex} setStringa={setStringa} setCellIndex={setCellIndex} lettera="Q"/>
-                <InputButton rowIndex={rowIndex} cellIndex={cellIndex} setStringa={setStringa} setCellIndex={setCellIndex} lettera="W"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="E"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="R"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="T"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="Y"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="U"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="I"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="O"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="P"/>
-
-            </div>
-
-            <div className="second-row">
-
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="A"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="S"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="D"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="F"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="G"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="H"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="J"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="K"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="L"/>
-            </div>
-
-            <div className="third-row">
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="Z"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="X"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="C"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="V"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="B"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="N"/>
-                <InputButton cellIndex={cellIndex} setCellIndex={setCellIndex} lettera="M"/>
-                <InputButton lettera="INVIO" clickFunction={handleInvio}/>
-                <InputButton clickFunction={handleDelete} lettera={<img width="50" height="50" src="https://img.icons8.com/ios/50/000000/backspace.png" alt="backspace"/>}/>
-
-            </div>
+            {rows.map((row, index) => (
+                <div className="row" key={index}>
+                    {row.map((key, keyIndex) => (
+                        <InputButton
+                            key={keyIndex}
+                            rowIndex={rowIndex}
+                            cellIndex={cellIndex}
+                            setStringa={setStringa}
+                            setCellIndex={setCellIndex}
+                            lettera={key}
+                            clickFunction={key === 'INVIO' ? handleInvio : (key === 'DELETE' ? handleDelete : undefined)}
+                        />
+                    ))}
+                </div>
+            ))}
         </div>
-    )
+    );
 }

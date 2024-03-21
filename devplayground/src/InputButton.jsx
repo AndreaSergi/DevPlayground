@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-
-
 export function InputButton({ lettera, cellIndex, setCellIndex, rowIndex, clickFunction, setStringa}) {
 
 
-
-    
     const handleClick = () => {
 
         if(!clickFunction){
@@ -21,12 +16,6 @@ export function InputButton({ lettera, cellIndex, setCellIndex, rowIndex, clickF
         } else {
             clickFunction()
         }
-        
-        
-        //  else {
-        //     console.log('All divs are already populated.');
-        //     setWordIndex(wordIndex + 1)
-        // }
     };
 
     return (
