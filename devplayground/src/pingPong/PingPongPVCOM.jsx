@@ -4,13 +4,14 @@ import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
-import { SingleScore } from "./SingleScore"
-import './pingpong.css'
+import { SingleScore } from "./SingleScore";
+import './pingpong.css';
 
 function PingPongPVCOM() {
-  const larghezzaCampo = 900
-  const altezzaCampo = 450
-  const name = "Giocatore"
+  console.log("ti trovi su PingPong PVCOM")
+  const larghezzaCampo = 900;
+  const altezzaCampo = 450;
+  const name = "Giocatore";
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -21,7 +22,7 @@ function PingPongPVCOM() {
 
   let [getCheck, setCheck] = useState(true); //state utilizzato per verificare la fine della partita
 
-  let [key, setKey] = useState(0); // state utilizzato per le key relative al salvataggio dati al sassion storage
+  let [key, setKey] = useState(0); // state utilizzato per le key relative al salvataggio dati al session storage
 
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
@@ -48,7 +49,6 @@ function PingPongPVCOM() {
       ballTop <= paddleBottom
     );
   };
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,7 +78,7 @@ function PingPongPVCOM() {
           setVerticalDirection(0);
           setHorizontalDirection(0);
 
-          sessionStorage.setItem(key, { name: name, score: score, data: new Date });
+          sessionStorage.setItem(key, JSON.stringify({ name: name, score: score, data: new Date() }));
           setKey(key + 1);
 
 
@@ -133,7 +133,7 @@ function PingPongPVCOM() {
     left: `${getLeft}px`,
   };
 
-  // Funzione per controllare il padlle
+  // Funzione per controllare il paddle
   const handleKeyDown = (event) => {
     if (event.key === "ArrowUp") {
       setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
@@ -220,4 +220,4 @@ function PingPongPVCOM() {
   );
 }
 
-export default PingPongPVCOM
+export default PingPongPVCOM;

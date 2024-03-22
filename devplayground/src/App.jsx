@@ -1,9 +1,10 @@
 import './App.css'
-import { Home } from './pingPong/Home'
+import { Href } from './pingPong/Href'
+
 
 function App() {
   return (
-    <Home />
+    <Href />
   )
 }
 
