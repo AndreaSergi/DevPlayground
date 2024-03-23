@@ -55,6 +55,7 @@
 @-webkit-keyframes tracking-in-expand {
   0% {
     letter-spacing: -0.5em;
+    text-indent: -0.5px;
     opacity: 0;
   }
   40% {
@@ -68,6 +69,7 @@
 @keyframes tracking-in-expand {
   0% {
     letter-spacing: -0.5em;
+    text-indent: -0.5px;
     opacity: 0;
   }
   40% {
