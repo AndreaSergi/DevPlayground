@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@0,100..900;1,100..900&display=swap');
 
+@font-face {
+  font-family: 'FontoshanHandwrite';
+  src: url('./FontoshanHandwrite.ttf') format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +18,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Genos";
+  font-family: "FontoshanHandwrite";
+  /* font-family: "Genos"; */
   color: var(--tris-text-color);
 }
 
