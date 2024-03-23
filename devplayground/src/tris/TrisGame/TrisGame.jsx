@@ -4,7 +4,7 @@ import style from "./TrisGame.module.css";
 export function TrisGame() {
   return (
     <div className={style.container}>
-      <p>Game</p>
+      <p className={style.grid}>Game</p>
       <TrisButton onClick={() => {}}>
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path
