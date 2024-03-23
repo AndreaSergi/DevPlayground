@@ -13,19 +13,26 @@ export function SingleScore({ player, namePlayer }) {
         display: "flex",
         flexDirection: "horizontal",
         align: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: "100px"
       };
     
     
       const score = {
         display: "flex",
         flexDirection: "horizontal",
+        height: "100%"
+      }
+
+      const styleImg = {
+        height: "50px",
+        borderRadius: "100%"
       }
     
       return (
         <div style={scoreStyle}>
           <div style={score}>
-            <img src="vite.svg" alt="avatar pc" />
+            <img style={styleImg} src="avatar1.png" alt="avatar pc" />
             <div style={{marginLeft: "30px"}}>
               <h2>{namePlayer}</h2>
               <h3>{player}</h3>
