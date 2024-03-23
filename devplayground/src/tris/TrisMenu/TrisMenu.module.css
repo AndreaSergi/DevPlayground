@@ -9,9 +9,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  -webkit-animation: slide-in-bottom 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  gap: 18px;
+  animation: slide-in-bottom 0.5s 1.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-bottom 0.5s 1.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* animation slide-in-bottom (button) */

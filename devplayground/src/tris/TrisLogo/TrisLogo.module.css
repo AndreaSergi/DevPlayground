@@ -8,8 +8,8 @@
   width: 150px;
   height: 150px;
   fill: var(--tris-logo-svg-color);
-  animation: slide-in-top 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  -webkit-animation: slide-in-top 0.5s 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-top 0.5s 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-top 0.5s 0.9s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .text {
@@ -18,8 +18,8 @@
   font-size: 64px;
   letter-spacing: 48px;
   text-indent: 48px;
-  animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
-  -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  -webkit-animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
 
 /* animation slide-in-top (logo) */
