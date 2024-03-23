@@ -1,4 +1,4 @@
-export function InputButton({ lettera, cellIndex, setCellIndex, rowIndex, clickFunction, setStringa}) {
+export function InputButton({ lettera, cellIndex, setCellIndex, rowIndex, clickFunction, setTentativo}) {
 
 
     const handleClick = () => {
@@ -10,7 +10,8 @@ export function InputButton({ lettera, cellIndex, setCellIndex, rowIndex, clickF
                 wordCells[cellIndex].innerText = lettera;
                 if(wordCells[cellIndex].innerText){
                     setCellIndex(cellIndex + 1);
-                    setStringa((letterePrecedente) => letterePrecedente + lettera)
+                    setTentativo((letterePrecedente) => letterePrecedente + lettera)
+
                 }
             }
         } else {

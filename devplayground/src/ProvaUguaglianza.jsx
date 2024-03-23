@@ -1,4 +1,68 @@
-import { useState, useEffect } from "react";
+export function ProvaUguaglianza() {
+
+    const lettereUguali = []
+    const indiciUguali = []
+
+    let parolaCorretta = 'stela'
+    let tentativo = 'atena'
+
+/*  et parola1 = parolaCorretta.split('').sort().join('')
+    let parola2 = tentativo.split('').sort().join('') */
+
+    for(let i = 0; i < parolaCorretta.length; i++){
+        for(let j = 0; j < tentativo.length; j++) {
+            if(parolaCorretta[i] === tentativo[j]){
+                lettereUguali.push(tentativo[j]) // DIVENTARE GIALLE
+            }
+        }
+    }
+
+    console.log(lettereUguali)
+
+    for(let i = 0; i < parolaCorretta.length; i++){
+        if(parolaCorretta[i] === tentativo[i]){
+            indiciUguali.push[tentativo[i]] // DIVENTARE VERDI
+        }
+    }
+
+    console.log(indiciUguali)
+    
+
+    console.log(parolaCorretta)
+    console.log(tentativo)
+
+    return
+}
+
+/* const lettereUguali = []
+
+    let fiore = 'fiore'
+    let andre = 'andre'
+
+    let parola1 = fiore.split('').sort().join('')
+    let parola2 = andre.split('').sort().join('')
+
+    for(let i = 0; i < parola1.length; i++){
+        if(parola1[i] === parola2[i]){
+            lettereUguali.push(parola1[i], parola2[i])
+        }
+    }
+    console.log(lettereUguali)
+
+    console.log(parola1)
+    console.log(parola2) */
+
+
+
+
+
+
+
+
+
+    /* Backup Tastiera */
+
+    import { useState, useEffect } from "react";
 import {InputButton} from "./InputButton"
 
 
@@ -552,13 +616,15 @@ export function Tastiera(){
 
     function handleInvio(){
         if(rowIndex <= 5 && cellIndex > 4 && paroleItaliane5.includes(parolaCorretta)){
-            console.log(tentativo)
             console.log("Cell index:", cellIndex)
             setRowIndex(rowIndex + 1);
             setCellIndex(0);
             setArrayParole1(prevArray => [...prevArray, tentativo]);
+            setTentativo("");
+            console.log("Row index:", rowIndex)
+            console.log("Parola corretta:", parolaCorretta)
 
-            
+            // CONTROLLO PER VEDERE SE LE LETTERE DELLA PAROLA INSERITA SONO PRESENTI NELLA PAROLA CORRETTA
 
             for(let i = 0; i < parolaCorretta.length; i++){
                 for(let j = 0; j < tentativo.length; j++) {
@@ -576,23 +642,17 @@ export function Tastiera(){
                 }
             }
 
-            setTentativo("");
-
-            console.log("Row index:", rowIndex)
-            console.log("Parola corretta:", parolaCorretta)
-
-            // CONTROLLO PER VEDERE SE LE LETTERE DELLA PAROLA INSERITA SONO PRESENTI NELLA PAROLA CORRETTA
-            return
-
         } else {
             return null
         }
     }
 
-   
+    useEffect(() => {
         console.log('Lettere uguali:', lettereUguali)
         console.log('Indici uguali:', indiciUguali) 
         console.log('Parola corretta:', parolaCorretta)
+        console.log('Tentativo:', tentativo)
+    }, [lettereUguali, indiciUguali, parolaCorretta, tentativo])
 
 
     function handleDelete() {
