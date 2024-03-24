@@ -1,16 +1,15 @@
 import { RowGrid } from "./RowGrid";
 
-export function ParoleGrid({lettera}){
+export function ParoleGrid({lettera, lettereUguali}){
 
 
     return(
         <div className="main-grid">
-            <RowGrid lettera={lettera}/>
-            <RowGrid index={2} lettera={lettera}/>
-            <RowGrid lettera={lettera}/>
-            <RowGrid lettera={lettera}/>
-            <RowGrid lettera={lettera}/>
-            <RowGrid lettera={lettera}/>
+            <RowGrid lettereUguali={lettereUguali} lettera={lettera}/>
+            <RowGrid lettereUguali={lettereUguali} lettera={lettera}/>
+            <RowGrid lettereUguali={lettereUguali} lettera={lettera}/>
+            <RowGrid lettereUguali={lettereUguali} lettera={lettera}/>
+            <RowGrid lettereUguali={lettereUguali} lettera={lettera}/>
         </div>
 
     )

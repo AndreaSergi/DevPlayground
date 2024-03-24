@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import {InputButton} from "./InputButton"
+import { RowGrid } from './RowGrid';
+import {ParoleGrid} from './ParoleGrid'
 
 
 export function Tastiera(){
@@ -15,7 +17,8 @@ export function Tastiera(){
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
         ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
         ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'INVIO', 'DELETE']
-    ];
+    ]
+
 
     const paroleItaliane5 = [
         "fiera",
@@ -539,60 +542,57 @@ export function Tastiera(){
       ];
       
 
+
+
+
+
       useEffect(() => {
-        const indiceParola = Math.floor(Math.random() * paroleItaliane5.length);
-        setParolaCorretta(() => paroleItaliane5[indiceParola].split(''))
-    }, []);
+          const indiceParola = Math.floor(Math.random() * paroleItaliane5.length);
+          setParolaCorretta(() => paroleItaliane5[indiceParola].split(''))
+        }, []);
 
-    
 
-    useEffect(() => {
-        console.log("Array of words:", arrayParole1);
-    }, [arrayParole1]);
+        useEffect(()=>{
 
-    function handleInvio(){
-        if(rowIndex <= 5 && cellIndex > 4 && paroleItaliane5.includes(parolaCorretta)){
-            console.log(tentativo)
-            console.log("Cell index:", cellIndex)
-            setRowIndex(rowIndex + 1);
-            setCellIndex(0);
-            setArrayParole1(prevArray => [...prevArray, tentativo]);
-
-            
-
-            for(let i = 0; i < parolaCorretta.length; i++){
-                for(let j = 0; j < tentativo.length; j++) {
-                    if(parolaCorretta[i] === tentativo[j]){
-                        setLettereUguali(letteraUgualePrecedente => [...letteraUgualePrecedente, tentativo[j]]) // DIVENTARE GIALLE
-                    }
-                }
-            }
-
-            // CONTROLLO PER VEDERE SE LE PAROLE CHE SONO PRESENTI SONO NELLA POSIZIONE CORRETTA
-
-            for(let i = 0; i < parolaCorretta.length; i++){
-                if(parolaCorretta[i] === tentativo[i]){
-                    setIndiciUguali(indiceUgualePrecedente => [...indiceUgualePrecedente, [tentativo[i]]]) // DIVENTARE VERDI
-                }
-            }
-
-            setTentativo("");
-
-            console.log("Row index:", rowIndex)
             console.log("Parola corretta:", parolaCorretta)
-
-            // CONTROLLO PER VEDERE SE LE LETTERE DELLA PAROLA INSERITA SONO PRESENTI NELLA PAROLA CORRETTA
-            return
-
-        } else {
-            return null
+        },[parolaCorretta])
+        
+        console.log("-----------------------------------------------")
+            
+        function handleInvio() {
+            if (rowIndex <= 5 && cellIndex > 4) {
+                setRowIndex(rowIndex + 1);
+                setCellIndex(0);
+                setArrayParole1(prevArray => [...prevArray, tentativo]);
+        
+                const tentativoLowercase = tentativo.toLowerCase();
+                const tentativoArray = tentativoLowercase.split('');
+        
+                // Trova le lettere uguali
+                const nuoveLettereUguali = tentativoArray.filter(lettera => parolaCorretta.includes(lettera));
+                            
+                // Trova gli indici uguali
+                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? lettera : null)).filter(Boolean);
+        
+                // Aggiungi i nuovi valori agli array di stato
+                setLettereUguali(prevLettereUguali => [...prevLettereUguali, ...nuoveLettereUguali]);
+                setIndiciUguali(prevIndiciUguali => [...prevIndiciUguali, ...nuoviIndiciUguali]);
+                
+                setTentativo("");
+            } else {
+                return null;
+            }
         }
-    }
+        
+            useEffect(() => {
+                console.log('Lettere uguali:', lettereUguali);
+            }, [lettereUguali]);
+        
+            useEffect(() => {
+                console.log('Indici uguali:', indiciUguali);
+            }, [indiciUguali]);
 
-   
-        console.log('Lettere uguali:', lettereUguali)
-        console.log('Indici uguali:', indiciUguali) 
-        console.log('Parola corretta:', parolaCorretta)
+
 
 
     function handleDelete() {
