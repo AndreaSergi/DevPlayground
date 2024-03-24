@@ -4,14 +4,11 @@ import { RowGrid } from './RowGrid';
 import {ParoleGrid} from './ParoleGrid'
 
 
-export function Tastiera(){
+export function Tastiera({onInvio, rowIndex, setRowIndex}){
     const [cellIndex, setCellIndex] = useState(0);
-    const [rowIndex, setRowIndex] = useState(0)
     const [tentativo, setTentativo ] = useState("")
     const [arrayParole1, setArrayParole1] = useState([])
     const [parolaCorretta, setParolaCorretta] = useState('')
-    const [lettereUguali, setLettereUguali] = useState([])
-    const [indiciUguali, setIndiciUguali] = useState([])
     
     const rows = [
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -543,9 +540,6 @@ export function Tastiera(){
       
 
 
-
-
-
       useEffect(() => {
           const indiceParola = Math.floor(Math.random() * paroleItaliane5.length);
           setParolaCorretta(() => paroleItaliane5[indiceParola].split(''))
@@ -560,6 +554,7 @@ export function Tastiera(){
         console.log("-----------------------------------------------")
             
         function handleInvio() {
+
             if (rowIndex <= 5 && cellIndex > 4) {
                 setRowIndex(rowIndex + 1);
                 setCellIndex(0);
@@ -569,30 +564,27 @@ export function Tastiera(){
                 const tentativoArray = tentativoLowercase.split('');
         
                 // Trova le lettere uguali
-                const nuoveLettereUguali = tentativoArray.filter(lettera => parolaCorretta.includes(lettera));
+                const nuoveLettereUguali = tentativoArray.map((lettera, index) => (parolaCorretta.includes(lettera) ? index : null)).filter((lettera)=>(lettera != null));
                             
                 // Trova gli indici uguali
-                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? lettera : null)).filter(Boolean);
+                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? index : null)).filter((lettera)=>(lettera != null ))
         
                 // Aggiungi i nuovi valori agli array di stato
-                setLettereUguali(prevLettereUguali => [...prevLettereUguali, ...nuoveLettereUguali]);
-                setIndiciUguali(prevIndiciUguali => [...prevIndiciUguali, ...nuoviIndiciUguali]);
+
+                onInvio(nuoveLettereUguali, nuoviIndiciUguali)
+                console.log(nuoviIndiciUguali)
+                // setLettereUguali(prevLettereUguali => [...prevLettereUguali, ...nuoveLettereUguali]);
+                // setIndiciUguali(prevIndiciUguali => [...prevIndiciUguali, ...nuoviIndiciUguali]);
                 
+
                 setTentativo("");
+
+                
             } else {
                 return null;
             }
         }
-        
-            useEffect(() => {
-                console.log('Lettere uguali:', lettereUguali);
-            }, [lettereUguali]);
-        
-            useEffect(() => {
-                console.log('Indici uguali:', indiciUguali);
-            }, [indiciUguali]);
-
-
+  
 
 
     function handleDelete() {

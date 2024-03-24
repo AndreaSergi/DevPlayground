@@ -1,25 +1,37 @@
-
 import React, { useEffect, useState } from 'react';
 
-export function RowGrid({ lettera, lettereUguali }) {
-    const [color, setColor] = useState('red');
+export function RowGrid({ lettereUguali, indiciUguali, rowIndex, posizione }) {
+    const [colors, setColors] = useState(["white","white","white","white","white"])
 
-    useEffect(() => {
-        if (lettereUguali && lettereUguali.includes(lettera.toLowerCase())) {
-            setColor('yellow');
-        } else {
-            console.log("sono nell'if di lettere uguali")
-            setColor('black');
+// lettere uguali= [1,2,4]
+
+    useEffect(()=>{
+        const arrayMomentaneo = colors
+        if(lettereUguali && rowIndex == posizione + 1){
+            for(let i = 0; i < lettereUguali.length ; i++){
+                const indiceMomentaneo = lettereUguali[i]
+                arrayMomentaneo[indiceMomentaneo] = "yellow"
+            }
         }
-    }, [lettereUguali, lettera]);
+
+        if(indiciUguali && rowIndex == posizione + 1){
+            for(let i = 0; i < indiciUguali.length ; i++){
+                const indiceMomentaneo = indiciUguali[i]
+                arrayMomentaneo[indiceMomentaneo] = "green"
+            }
+        }
+        setColors([...arrayMomentaneo])
+
+    },[lettereUguali])
+    
 
     return (
         <div className="wordCellsContainer">
-            <div className="cell" style={{ color: color }}>{lettera}</div>
-            <div className="cell" style={{ color: color }}>{lettera}</div>
-            <div className="cell" style={{ color: color }}>{lettera}</div>
-            <div className="cell" style={{ color: color }}>{lettera}</div>
-            <div className="cell" style={{ color: color }}>{lettera}</div>
+
+            {[...Array(5)].map((value, index)=>{
+                return (<div key= {index} className="cell" style={{ color: colors[index] }}></div>)
+                })
+            }
         </div>
     );
 }
