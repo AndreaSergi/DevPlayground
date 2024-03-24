@@ -58,7 +58,7 @@
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    background-color: rgb(102, 102, 102);
+    background-color: black;
     gap: 30px;
 }
 

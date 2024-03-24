@@ -23,7 +23,9 @@ export function RowGrid({ lettereUguali, indiciUguali, rowIndex, posizione }) {
         setColors([...arrayMomentaneo])
 
     },[lettereUguali])
-    
+
+  
+
 
     return (
         <div className="wordCellsContainer">
@@ -35,3 +37,4 @@ export function RowGrid({ lettereUguali, indiciUguali, rowIndex, posizione }) {
         </div>
     );
 }
+

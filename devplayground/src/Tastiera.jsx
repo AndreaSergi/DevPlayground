@@ -568,6 +568,17 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
                             
                 // Trova gli indici uguali
                 const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? index : null)).filter((lettera)=>(lettera != null ))
+
+                const conteggiLettere = {};
+
+                // Per ogni lettera nell'array tentativoArray, conta quante volte appare in parolaCorretta
+                tentativoArray.forEach(lettera => {
+                    const conteggio = parolaCorretta.filter(parolaLettera => parolaLettera === lettera).length;
+                    conteggiLettere[lettera] = conteggio;
+                });
+
+                // Stampa i conteggi delle lettere
+                console.log(conteggiLettere);
         
                 // Aggiungi i nuovi valori agli array di stato
 
