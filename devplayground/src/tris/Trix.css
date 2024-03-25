@@ -1,5 +1,10 @@
 /* App.css */
 
+@font-face {
+  font-family: 'FontoshanHandwrite';
+  src: url('./FontoshanHandwrite.ttf') format('truetype');
+}
+
 .layer {
   position: absolute;
   top: 0;
@@ -13,7 +18,7 @@
 
 body {
   background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
 }
 
 .App {
