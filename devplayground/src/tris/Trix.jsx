@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Trix.css";
-import style from "../tris/TrisButton/TrisButton.module.css";
+import { TrisButton } from "./TrisButton/TrisButton";
 
 const BOARD_SIZE = 3;
 
@@ -161,9 +161,11 @@ export function Trix() {
       {winner && (
         <p>{winner === "Draw" ? "It's a draw!" : `Player ${winner} wins!`}</p>
       )}
-      <button className={style.button} onClick={initializeBoard}>
+
+      <TrisButton onClick={initializeBoard}>Rematch</TrisButton>
+      {/* <button onClick={initializeBoard}>
         Rivincita
-      </button>
+      </button> */}
 
       <div className="board">
         <div className="layer"> {renderBoard()}</div>
