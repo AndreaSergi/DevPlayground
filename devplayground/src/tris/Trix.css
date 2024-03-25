@@ -13,7 +13,7 @@
   height: 100%;
   background-image: url(./Tic-tac-toe.png);
 }
-// Aggiunta classe, dedicata alla griglia bianca, per la versione dark
+/* Aggiunta classe, dedicata alla griglia bianca, per la versione dark */
 .layer.dark {
   background-image: url(./Dark-tic-tac-toe.png);
 }
