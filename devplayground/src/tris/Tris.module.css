@@ -8,13 +8,13 @@
 * {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   user-select: none;
 }
 
 .page {
   background-color: var(--tris-background-color);
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   display: flex;
   justify-content: center;
