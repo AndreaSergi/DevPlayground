@@ -563,11 +563,12 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
                 const tentativoLowercase = tentativo.toLowerCase();
                 const tentativoArray = tentativoLowercase.split('');
         
+                // Trova gli indici uguali
+                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? index : null)).filter((lettera)=>(lettera != null ))
+                
                 // Trova le lettere uguali
                 const nuoveLettereUguali = tentativoArray.map((lettera, index) => (parolaCorretta.includes(lettera) ? index : null)).filter((lettera)=>(lettera != null));
                             
-                // Trova gli indici uguali
-                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? index : null)).filter((lettera)=>(lettera != null ))
 
                 const conteggiLettere = {};
 
@@ -584,9 +585,7 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
 
                 onInvio(nuoveLettereUguali, nuoviIndiciUguali)
                 console.log(nuoviIndiciUguali)
-                // setLettereUguali(prevLettereUguali => [...prevLettereUguali, ...nuoveLettereUguali]);
-                // setIndiciUguali(prevIndiciUguali => [...prevIndiciUguali, ...nuoviIndiciUguali]);
-                
+                console.log('Nuove lettere uguali:', nuoveLettereUguali)
 
                 setTentativo("");
 
