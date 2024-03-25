@@ -27,6 +27,9 @@ function PingPongPVP() {
 
   let [checkEndGame, setCheckEndGame] = useState(false); //state utilizzato per verificare la fine della partita
 
+  // Carica il file audio per il suono del paddle
+  const [audio] = useState(new Audio("/pingpong/songs/songPaddle.mp3"));
+
   // Funzione per controllare se la pallina ha colpito un paddle
   const checkPaddleHit = (
     ballPos,
@@ -45,12 +48,17 @@ function PingPongPVP() {
     const paddleTop = paddlePos.y;
     const paddleBottom = paddlePos.y + paddleHeight;
 
-    return (
+    if (
       ballRight >= paddleLeft &&
       ballLeft <= paddleRight &&
       ballBottom >= paddleTop &&
       ballTop <= paddleBottom
-    );
+    ) {
+      // Riproduci il suono solo se la pallina colpisce il paddle
+      audio.play();
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -95,15 +103,13 @@ function PingPongPVP() {
         const paddleWidth = 10;
         const ballSize = 15;
 
-        if (
-          checkPaddleHit(
+        if (checkPaddleHit(
             ballPos,
             paddleLeftPos,
             paddleHeight,
             paddleWidth,
             ballSize
-          ) ||
-          checkPaddleHit(
+          ) || checkPaddleHit(
             ballPos,
             paddleRightPos,
             paddleHeight,
@@ -114,13 +120,8 @@ function PingPongPVP() {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection);
         } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
-          if (newLeft <= 0) {
-            setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
-            setCheck(false);
-          } else {
-            setScore((score) => ({ ...score, player: score.player + 1 }));
-            setCheck(false);
-          }
+          // Nessun punto viene assegnato, la pallina rimbalza
+          setCheck(true);
           newLeft = 50;
         }
         return newLeft;
@@ -202,4 +203,4 @@ function PingPongPVP() {
   );
 }
 
-export default PingPongPVP
+export default PingPongPVP;

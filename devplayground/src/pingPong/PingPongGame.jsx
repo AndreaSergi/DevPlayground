@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, createContext, StrictMode } from "react";
+import React, { useState, useEffect } from "react";
 import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
@@ -14,56 +14,12 @@ export function PingPongGame() {
   const [score, setScore] = useState({ player: 0, opponent: 0 });
   let [paddleLeftY, setPaddleLeftY] = useState(115);
   let [paddleRightY, setPaddleRightY] = useState(115);
-  const larghezzaCampo = 900
-  const altezzaCampo = 450
+  const larghezzaCampo = 900;
+  const altezzaCampo = 450;
+  
 
   // Funzione per controllare se la pallina ha colpito un paddle
-  const checkPaddleHit = (
-    ballPos,
-    paddlePos,
-    paddleHeight,
-    paddleWidth,
-    ballSize
-  ) => {
-    const ballLeft = ballPos.x;
-    const ballRight = ballPos.x + ballSize;
-    const ballTop = ballPos.y;
-    const ballBottom = ballPos.y + ballSize;
-
-    const paddleLeft = paddlePos.x;
-    const paddleRight = paddlePos.x + paddleWidth;
-    const paddleTop = paddlePos.y;
-    const paddleBottom = paddlePos.y + paddleHeight;
-
-    return (
-      ballRight >= paddleLeft &&
-      ballLeft <= paddleRight &&
-      ballBottom >= paddleTop &&
-      ballTop <= paddleBottom
-    );
-  };
-
-  useEffect(() => {
-    // Funzione per controllare i padlle
-  const handleKeyDown = (event) => {
-    if (event.key === "w") {
-      setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
-    } else if (event.key === "s") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, 230));
-    }
-    if (event.key === "ArrowUp") {
-        setPaddleRightY((paddleRightY) => Math.max(paddleRightY - 10, 0));
-      } else if (event.key === "ArrowDown") {
-        setPaddleRightY((paddleRightY) => Math.min(paddleRightY + 10, 230));
-      }
-  };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -128,37 +84,13 @@ export function PingPongGame() {
     return () => clearInterval(interval);
   }, [getTop, verticalDirection, horizontalDirection]);
 
-  const styleMod = {
-    top: `${getTop}px`,
-    left: `${getLeft}px`,
-  };
-
-  // Funzione per controllare i padlle
-
-  const [key, setKey] = useState(null);
-  const [e, setE] = useState(0);
-
-  function handleKeyDown(event) {
-    setKey(event.key);
-    setE(e + 1);
-  }
-  useEffect(() => {
-    if (key == "arrowUp") {
-      setPaddleLeftY(paddleLeftY - 10);
-      console.log(paddleLeftY);
-    }
-    if (key == "arrowDown") {
-      setPaddleLeftY(paddleLeftY + 10);
-      console.log(paddleLeftY);
-    }
-
-    console.log(key);
-  }, [e]);
   return (
-    <div tabIndex={0} onKeyDown={handleKeyDown}>
-      <Punteggio player={score.player} opponent={score.opponent}/>
+    <div tabIndex={0}>
+      <Punteggio player={score.player} opponent={score.opponent} />
       <PingPong>
-        <Campo style={{width: `${larghezzaCampo}px`, height: `${altezzaCampo}px`}}>
+        <Campo
+          style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}
+        >
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -167,9 +99,10 @@ export function PingPongGame() {
             position="right"
             style={{ top: `${paddleRightY}px`, right: "0" }}
           />
-          <Ball style={styleMod} />
+          <Ball style={{ top: `${getTop}px`, left: `${getLeft}px` }} />
         </Campo>
       </PingPong>
+      <button onClick={audio.play()}>Debug</button>
     </div>
   );
 }
