@@ -9,6 +9,7 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
     const [tentativo, setTentativo ] = useState("")
     const [arrayParole1, setArrayParole1] = useState([])
     const [parolaCorretta, setParolaCorretta] = useState('')
+    const [arrayDiLetterePuzzolenti, setArrayDiLetterePuzzolenti] = useState([])
     
     const rows = [
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -552,6 +553,25 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
         },[parolaCorretta])
         
         console.log("-----------------------------------------------")
+// -----------------------------------------------------------------------------
+
+    function provaTest(parola1, parola2){
+        let oggettoOccorrenze = {}
+        parola2.split("").forEach(element => {
+            if(oggettoOccorrenze[element] == undefined){
+                oggettoOccorrenze[element] = 0
+                parola1.forEach(element2 => {
+                    if(element2 === element){
+                        oggettoOccorrenze[element] ++
+                    }
+                })
+            }
+        });
+        return oggettoOccorrenze
+    }
+
+
+// ---------------------------------------------------------------------------
             
         function handleInvio() {
 
@@ -562,28 +582,42 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
         
                 const tentativoLowercase = tentativo.toLowerCase();
                 const tentativoArray = tentativoLowercase.split('');
-        
-                // Trova gli indici uguali
-                const nuoviIndiciUguali = tentativoArray.map((lettera, index) => (parolaCorretta[index] === lettera ? index : null)).filter((lettera)=>(lettera != null ))
                 
+
+                console.log("AAAAAAAAAAAAAAAAAAAAAAAAA",tentativo, parolaCorretta)
+                
+                const oggettoOccorrenze = provaTest(parolaCorretta, tentativoLowercase)
+
+
+
+                // Trova gli indici uguali
+                const nuoviIndiciUguali = tentativoArray.map((element, index) => {
+                    if(parolaCorretta[index] === element)
+                    if(oggettoOccorrenze[element] > 0){
+                        oggettoOccorrenze[element] --
+                        return index
+                    }
+                }).filter((lettera)=>(lettera != null));
+
                 // Trova le lettere uguali
-                const nuoveLettereUguali = tentativoArray.map((lettera, index) => (parolaCorretta.includes(lettera) ? index : null)).filter((lettera)=>(lettera != null));
+                const nuoveLettereUguali = tentativoArray.map((element, index) => {
+                    if(oggettoOccorrenze[element] > 0){
+                        oggettoOccorrenze[element] --
+                        console.log("coloro di giallo", element)
+                        return index
+                    } else {
+                        const letteraChePuzza = element
+                        setArrayDiLetterePuzzolenti((prevArray) => [...prevArray, letteraChePuzza])
+                        console.log("suca",letteraChePuzza)
+                    }
+                }).filter((lettera)=>(lettera != null));
+
+                console.log("NUOVO CONSOLLAZZO" ,nuoveLettereUguali)
+                
+                
                             
 
-                const conteggiLettere = {};
-
-                // Per ogni lettera nell'array tentativoArray, conta quante volte appare in parolaCorretta
-                tentativoArray.forEach(lettera => {
-                    const conteggio = parolaCorretta.filter(parolaLettera => parolaLettera === lettera).length;
-                    conteggiLettere[lettera] = conteggio;
-                });
-
-                // Stampa i conteggi delle lettere
-                console.log(conteggiLettere);
-        
-                // Aggiungi i nuovi valori agli array di stato
-
-                onInvio(nuoveLettereUguali, nuoviIndiciUguali)
+                onInvio(nuoveLettereUguali, nuoviIndiciUguali, oggettoOccorrenze)
                 console.log(nuoviIndiciUguali)
                 console.log('Nuove lettere uguali:', nuoveLettereUguali)
 
@@ -624,6 +658,7 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
                             setTentativo={setTentativo}
                             setCellIndex={setCellIndex}
                             lettera={key}
+                            puzza={arrayDiLetterePuzzolenti.includes(key.toLowerCase())}
                             clickFunction={key === 'INVIO' ? handleInvio : (key === 'DELETE' ? handleDelete : undefined)}
                         />
                     ))}

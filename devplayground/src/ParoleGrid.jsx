@@ -1,6 +1,6 @@
 import { RowGrid } from "./RowGrid";
 
-export function ParoleGrid({ lettereUguali, rowIndex, indiciUguali }){
+export function ParoleGrid({ lettereUguali, rowIndex, indiciUguali}){
 
 
     return(
@@ -12,6 +12,7 @@ export function ParoleGrid({ lettereUguali, rowIndex, indiciUguali }){
             <RowGrid posizione = {3} indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex}/>
             <RowGrid posizione = {4} indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex}/>
             <RowGrid posizione = {5} indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex}/>
+            <RowGrid posizione = {6} indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex}/>
         </div>
 
     )

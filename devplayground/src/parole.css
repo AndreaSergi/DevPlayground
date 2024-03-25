@@ -18,6 +18,8 @@
     margin-top: 20px;
 }
 
+
+
 .first-row{
     display: flex;
     margin-bottom: 5px;
@@ -82,4 +84,16 @@ h1{
 
 .row{
     display: flex;
+}
+
+
+.disabledButton{
+    background-color: red;
+    color: yellow;
+}
+
+.disabledButton:hover{
+    cursor: unset;
+    background-color: red;
+    color: yellow;
 }

@@ -11,6 +11,7 @@ export function App() {
     const [indiciUguali, setIndiciUguali] = useState([]);
     const [rowIndex, setRowIndex] = useState(0)
     const [gameOver, setGameOver] = useState(false)
+    const [oggettoOccorrenze, setOggettoOccorrenze] = useState({});
 
 
 
@@ -19,14 +20,13 @@ export function App() {
         
         setLettereUguali(newLettereUguali)
         setIndiciUguali(newIndiciUguali)
-
         
         console.log("asdfsdxg",indiciUguali)
     
     };
 
     useEffect(()=>{
-        if(indiciUguali.length == 5 || rowIndex  > 5){
+        if(indiciUguali.length == 5 || rowIndex  > 6){
             setGameOver(true)
         }
 
@@ -36,7 +36,7 @@ export function App() {
     return (
         <div className="main-container">
             <h1>Indovina la parola di oggi</h1>
-            <ParoleGrid indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex}/>
+            <ParoleGrid indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex} occorenze = {oggettoOccorrenze}/>
             {!gameOver &&
                 <Tastiera onInvio={handleInvio} rowIndex = {rowIndex} setRowIndex = {setRowIndex} />
             }

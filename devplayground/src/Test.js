@@ -1,24 +1,30 @@
-const parolaCorretta = 'collaccr'.split('');
-const tentativoCorrente = 'collara'.split('');
-/* const letter = 'l' */
-console.log(parolaCorretta);
-const array = [];
-const arrayGialle= []
+const parolaCorretta = 'collaccrl'.split('');
+const tentativoCorrente = 'collaraa'.split('');
 
-function conteggioLettere(parolaCorretta, tentativoCorrente) {
-    let counter = 0;
-    for (let i = 0; i < parolaCorretta.length; i++) {
-        // Check if the current letter of parolaCorretta exists in tentativoCorrente
-        if (tentativoCorrente.includes(parolaCorretta[i])) {
-            array.push(i);
-            arrayGialle.push()
-            counter++;
-            console.log('Matched letter:', parolaCorretta[i]);
+
+function provaTest(parola1, parola2){
+    let oggettoOccorrenze = {}
+     parola2.forEach(element => {
+        if(oggettoOccorrenze[element] == undefined){
+            oggettoOccorrenze[element] = 0
+            parola1.forEach(element2 => {
+                if(element2 === element){
+                    oggettoOccorrenze[element] ++
+                }
+            })
         }
-    }
-    console.log(tentativoCorrente, counter);
-    console.log('array', array);
-    return counter;
+    });
+
+    return oggettoOccorrenze
 }
 
-conteggioLettere(parolaCorretta, tentativoCorrente);
+const oggettoOccorrenze = provaTest(parolaCorretta, tentativoCorrente)
+
+tentativoCorrente.forEach(element => {
+    if(oggettoOccorrenze[element] > 0){
+        oggettoOccorrenze[element] --
+        console.log("coloro di giallo", element)
+
+    }
+});
+console.log("dopoforeach", oggettoOccorrenze)
