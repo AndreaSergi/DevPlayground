@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Trix.css";
 import { TrisButton } from "./TrisButton/TrisButton";
+import { TrisThemeContext } from "./TrisThemeContext/TrisThemeContext";
 
 const BOARD_SIZE = 3;
 
@@ -15,6 +16,8 @@ export function Trix() {
   const [winningCells, setWinningCells] = useState([]);
   const [scoreX, setScoreX] = useState(0);
   const [scoreO, setScoreO] = useState(0);
+
+  const theme = useContext(TrisThemeContext)
 
   function checkWinner() {
     // Check rows
@@ -168,7 +171,8 @@ export function Trix() {
       </button> */}
 
       <div className="board">
-        <div className="layer"> {renderBoard()}</div>
+        <div className={theme === "light" ? "layer" : "layer dark"}> {renderBoard()}</div> 
+        {/* <div className="layer"> {renderBoard()}</div> */}
       </div>
 
       <div className="scoreboard">

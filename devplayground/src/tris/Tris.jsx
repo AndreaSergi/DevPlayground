@@ -4,6 +4,7 @@ import style from "./Tris.module.css";
 import lightStyle from "./TrisLight.module.css";
 import darkStyle from "./TrisDark.module.css";
 import { Outlet } from "react-router-dom";
+import { TrisThemeContext } from "./TrisThemeContext/TrisThemeContext";
 
 export function Tris() {
   const [dark, setDark] = useState(false);
@@ -16,7 +17,9 @@ export function Tris() {
 
   return (
     <div className={`${themeStyle.page} ${style.page}`}>
+      <TrisThemeContext.Provider value={dark ? "dark" : "light"}>
       <Outlet />
+      </TrisThemeContext.Provider>
       <div className={style.themeButton}>
         <TrisInlineButton onClick={toggleTheme}>
           {!dark ? (
