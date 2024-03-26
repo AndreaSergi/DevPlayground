@@ -96,11 +96,13 @@ h1{
 }
 
 
+
 .disabledButton{
-    background-color: red;
-    color: yellow;
+    background-color: rgb(48, 48, 48);
+    color: rgb(112, 112, 112);
 }
 
+<<<<<<< HEAD
 .disabledButton:hover{
     cursor: unset;
     background-color: red;
@@ -116,5 +118,11 @@ h1{
     border-radius: 6px;
     background-color: black;
     border: 3px solid white;
+=======
+
+
+.correctButton{
+    background-color: green;
+>>>>>>> 3e4974c6c1bfcc400d3a1cb362dffb3bceefd79b
     color: white;
 }

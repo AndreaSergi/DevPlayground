@@ -27,7 +27,7 @@ export function App() {
     };
 
     useEffect(()=>{
-        if(indiciUguali.length == 5 || rowIndex  > 5){
+        if(indiciUguali.length == 5 || rowIndex  > 4){
             setGameOver(true)
         }
 
