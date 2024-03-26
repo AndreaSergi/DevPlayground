@@ -113,7 +113,7 @@ function PingPongPVP() {
         ) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= larghezzaCampo) {
+        } else if (newLeft <= 0 || newLeft >= larghezzaCampo -15) {
           if (newLeft <= 0) {
             setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
             setCheck(false);
