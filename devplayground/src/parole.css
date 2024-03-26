@@ -63,30 +63,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .main-container {
     display: flex;
     justify-content: center;
@@ -115,6 +91,7 @@ h1{
     width: 62px;
     font-weight: 600;
     font-size: 24px;
+    color: white;
 }
 
 .wordCellsContainer{
