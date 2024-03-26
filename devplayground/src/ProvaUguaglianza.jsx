@@ -6,7 +6,7 @@ export function ProvaUguaglianza() {
     let parolaCorretta = 'stela'
     let tentativo = 'atena'
 
-/*  et parola1 = parolaCorretta.split('').sort().join('')
+/*  let parola1 = parolaCorretta.split('').sort().join('')
     let parola2 = tentativo.split('').sort().join('') */
 
     for(let i = 0; i < parolaCorretta.length; i++){

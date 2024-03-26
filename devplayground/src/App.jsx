@@ -1,4 +1,5 @@
 import { ParoleGrid } from "./ParoleGrid";
+import { PlayAgain } from "./PlayAgain";
 import { ProvaUguaglianza } from "./ProvaUguaglianza";
 import { RowGrid } from "./RowGrid";
 import { Tastiera } from "./Tastiera";
@@ -34,11 +35,11 @@ export function App() {
 
 
     return (
-        <div className="main-container">
-            <h1>Indovina la parola di oggi</h1>
+        <div className="main-container vibur-regular">
+            <h1>TITOLO DEL GIOCO</h1>
             <ParoleGrid indiciUguali = {indiciUguali} lettereUguali={lettereUguali} rowIndex = {rowIndex} occorenze = {oggettoOccorrenze}/>
-            {!gameOver &&
-                <Tastiera onInvio={handleInvio} rowIndex = {rowIndex} setRowIndex = {setRowIndex} />
+            {!gameOver ?
+                <Tastiera onInvio={handleInvio} rowIndex = {rowIndex} setRowIndex = {setRowIndex} /> : <PlayAgain />
             }
         </div>
     )
