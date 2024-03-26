@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, createContext, StrictMode } from "react";
+import { Link } from "react-router-dom";
 import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
-import { SingleScore } from "./SingleScore"
-import './pingpong.css'
+import { SingleScore } from "./SingleScore";
+import "./pingpong.css";
 
 function PingPongPVCOM() {
-  const larghezzaCampo = 900
-  const altezzaCampo = 450
-  const name = "Giocatore"
+  const larghezzaCampo = 900;
+  const altezzaCampo = 450;
+  const name = "Giocatore";
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);
   const [verticalDirection, setVerticalDirection] = useState(2); // Velocità verticale aumentata
@@ -49,7 +50,6 @@ function PingPongPVCOM() {
     );
   };
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       setTop((prevTop) => {
@@ -65,23 +65,23 @@ function PingPongPVCOM() {
         let newLeft = prevLeft + horizontalDirection;
         if (newLeft >= larghezzaCampo - 20 || newLeft <= 0) {
           newLeft = prevLeft;
-          setHorizontalDirection(-horizontalDirection)
-
+          setHorizontalDirection(-horizontalDirection);
         }
 
         //FINE PARTITA
         if (newLeft <= 9) {
-
           //console.log("fermare la pallina");
           //console.log(score);
           setCheck(false);
           setVerticalDirection(0);
           setHorizontalDirection(0);
 
-          sessionStorage.setItem(key, { name: name, score: score, data: new Date });
+          sessionStorage.setItem(key, {
+            name: name,
+            score: score,
+            data: new Date(),
+          });
           setKey(key + 1);
-
-
         }
         const ballPos = { x: newLeft, y: getTop };
         const paddleLeftPos = { x: 0, y: paddleLeftY };
@@ -138,7 +138,9 @@ function PingPongPVCOM() {
     if (event.key === "ArrowUp") {
       setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
     } else if (event.key === "ArrowDown") {
-      setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
+      setPaddleLeftY((paddleLeftY) =>
+        Math.min(paddleLeftY + 10, altezzaCampo - 70)
+      );
     }
   };
   useEffect(() => {
@@ -151,15 +153,15 @@ function PingPongPVCOM() {
   // SCORE FUNCTION
   const [moltiplicatore, setMoltiplicatore] = useState(1);
 
-  // definizione di moltiplicatore 
+  // definizione di moltiplicatore
   let id1 = setInterval(() => {
-    setMoltiplicatore(moltiplicatore + 1)
+    setMoltiplicatore(moltiplicatore + 1);
     console.log("interval 2");
-  }, (1000 * 60));
+  }, 1000 * 60);
 
   setTimeout(() => {
-    clearInterval(id1)
-  }, (1000 * 60));
+    clearInterval(id1);
+  }, 1000 * 60);
   // calcolo score
 
   let id2 = setInterval(() => {
@@ -169,9 +171,8 @@ function PingPongPVCOM() {
   }, 1000);
 
   setTimeout(() => {
-    clearInterval(id2)
+    clearInterval(id2);
   }, 1000);
-
 
   useEffect(() => {
     if (moltiplicatore <= 3) {
@@ -186,24 +187,36 @@ function PingPongPVCOM() {
         setVerticalDirection(verticalDirection - moltiplicatore);
       }
     } else {
-      console.log("velocità massima raggiunta")
+      console.log("velocità massima raggiunta");
     }
 
     console.log(`velocità ${verticalDirection}`);
     console.log(`minuti trascorsi ${moltiplicatore}`);
-  }, [moltiplicatore])
+  }, [moltiplicatore]);
   return (
     <div tabIndex={0} onKeyDown={handleKeyDown}>
       <SingleScore namePlayer={name} player={`${score}`} />
       <PingPong>
-
-        <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
-          {!getCheck && <div className="pop-up">
-            <h2>Game Over!</h2>
-            <h3>Il tuo punteggio: {score}</h3>
-            <button className="btn-pop-up">Menù principale</button>
-            <button className="btn-pop-up" onClick={() => { window.location.reload() }}>Nuova partita</button>
-          </div>}
+        <Campo
+          style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}
+        >
+          {!getCheck && (
+            <div className="pop-up">
+              <h2>Game Over!</h2>
+              <h3>Il tuo punteggio: {score}</h3>
+              <Link to="/">
+                <button className="btn-pop-up">Menù Principale</button>
+              </Link>
+              <button
+                className="btn-pop-up"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Nuova partita
+              </button>
+            </div>
+          )}
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -215,9 +228,8 @@ function PingPongPVCOM() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
-
     </div>
   );
 }
 
-export default PingPongPVCOM
+export default PingPongPVCOM;

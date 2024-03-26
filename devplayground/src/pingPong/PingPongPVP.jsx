@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { PingPong } from "./PingPong";
 import { Campo } from "./Campo";
 import { Paddle } from "./Paddle";
 import { Ball } from "./Ball";
 import { Punteggio } from "./Punteggio";
-import './pingpong.css'
-import "./pop-up.css"
+import "./pingpong.css";
+import "./pop-up.css";
 
 function PingPongPVP() {
   const [getTop, setTop] = useState(50);
@@ -16,10 +17,10 @@ function PingPongPVP() {
   const [score, setScore] = useState({ player: 0, opponent: 0 });
   let [paddleLeftY, setPaddleLeftY] = useState(115);
   let [paddleRightY, setPaddleRightY] = useState(115);
-  const larghezzaCampo = 900
-  const altezzaCampo = 450
-  const nameGiocatore1 = "Giocatore1"
-  const nameGiocatore2 = "Giocatore2"
+  const larghezzaCampo = 900;
+  const altezzaCampo = 450;
+  const nameGiocatore1 = "Giocatore1";
+  const nameGiocatore2 = "Giocatore2";
 
   let [goal, setGoal] = useState(""); // state utilizzato per assegnare il giocatore che ha appena ottenuto il punto
 
@@ -59,12 +60,16 @@ function PingPongPVP() {
       if (event.key === "w") {
         setPaddleLeftY((paddleLeftY) => Math.max(paddleLeftY - 10, 0));
       } else if (event.key === "s") {
-        setPaddleLeftY((paddleLeftY) => Math.min(paddleLeftY + 10, altezzaCampo - 70));
+        setPaddleLeftY((paddleLeftY) =>
+          Math.min(paddleLeftY + 10, altezzaCampo - 70)
+        );
       }
       if (event.key === "ArrowUp") {
         setPaddleRightY((paddleRightY) => Math.max(paddleRightY - 10, 0));
       } else if (event.key === "ArrowDown") {
-        setPaddleRightY((paddleRightY) => Math.min(paddleRightY + 10, altezzaCampo - 70));
+        setPaddleRightY((paddleRightY) =>
+          Math.min(paddleRightY + 10, altezzaCampo - 70)
+        );
       }
     };
 
@@ -113,7 +118,7 @@ function PingPongPVP() {
         ) {
           newLeft = prevLeft;
           setHorizontalDirection(-horizontalDirection);
-        } else if (newLeft <= 0 || newLeft >= larghezzaCampo -15) {
+        } else if (newLeft <= 0 || newLeft >= larghezzaCampo - 15) {
           if (newLeft <= 0) {
             setScore((score) => ({ ...score, opponent: score.opponent + 1 }));
             setCheck(false);
@@ -125,8 +130,6 @@ function PingPongPVP() {
         }
         return newLeft;
       });
-
-
     }, 25);
 
     return () => clearInterval(interval);
@@ -137,7 +140,6 @@ function PingPongPVP() {
     left: `${getLeft}px`,
   };
 
-
   // FREEZE GAME
   useEffect(() => {
     if (!getCheck) {
@@ -147,44 +149,71 @@ function PingPongPVP() {
       setVerticalDirection(4);
       setHorizontalDirection(3);
     }
-  }, [getCheck])
+  }, [getCheck]);
   // Assegnazione nome del giocatore che ha appena ottunuto il punto
   useEffect(() => {
     setGoal(nameGiocatore2);
-  }, [score.opponent])
+  }, [score.opponent]);
 
   useEffect(() => {
     setGoal(nameGiocatore1);
-  }, [score.player])
+  }, [score.player]);
 
   useEffect(() => {
     if (score.opponent || score.player == 10) {
-      setCheckEndGame(true)
+      setCheckEndGame(true);
     }
-  }, [score.opponent, score.player])
+  }, [score.opponent, score.player]);
 
   return (
     <div>
-      <Punteggio player={score.player} opponent={score.opponent} namePlayer1={nameGiocatore1} namePlayer2={nameGiocatore2} />
+      <Punteggio
+        player={score.player}
+        opponent={score.opponent}
+        namePlayer1={nameGiocatore1}
+        namePlayer2={nameGiocatore2}
+      />
       <PingPong>
-        <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
+        <Campo
+          style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}
+        >
           {/* pop-up assegnazione punteggio */}
-          {!getCheck && !checkEndGame &&
-
+          {!getCheck && !checkEndGame && (
             <div className="pop-up">
               <h2>Punto assegnato a: {goal} !</h2>
-              <h3>Punteggio attuale: {score.player} - {score.opponent}</h3>
-              <button onClick={() => { setCheck(true) }} className="btn-pop-up">Continua</button>
+              <h3>
+                Punteggio attuale: {score.player} - {score.opponent}
+              </h3>
+              <button
+                onClick={() => {
+                  setCheck(true);
+                }}
+                className="btn-pop-up"
+              >
+                Continua
+              </button>
             </div>
-          }
+          )}
           {/* pop-up fine partita */}
-          {checkEndGame &&
+          {checkEndGame && (
             <div className="pop-up">
               <h2>Game Over!</h2>
               <h3>Vince : {goal}</h3>
-              <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false); }} className="btn-pop-up">Rivincita</button>
-              <button className="btn-pop-up">Menù Principale</button>
-            </div>}
+              <button
+                onClick={() => {
+                  setCheck(true);
+                  setScore({ player: 0, opponent: 0 });
+                  setCheckEndGame(false);
+                }}
+                className="btn-pop-up"
+              >
+                Rivincita
+              </button>
+              <Link to="/">
+                <button className="btn-pop-up">Menù Principale</button>
+              </Link>
+            </div>
+          )}
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -196,9 +225,8 @@ function PingPongPVP() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
-
     </div>
   );
 }
 
-export default PingPongPVP
+export default PingPongPVP;
