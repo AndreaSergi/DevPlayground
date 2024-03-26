@@ -4,7 +4,7 @@ export function SingleScore({ player, namePlayer }) {
         padding: "10px",
         margin: "10px 0",
         borderRadius: "5px",
-        background: 'url("backgroundPunteggio.png")',
+        background: 'url("pingpong/img/backgroundPunteggio.png")',
         color: "#ffd702",
         textAlign: "center",
         boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
