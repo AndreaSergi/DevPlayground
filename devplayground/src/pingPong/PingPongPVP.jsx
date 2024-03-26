@@ -168,6 +168,23 @@ function PingPongPVP() {
       <Punteggio player={score.player} opponent={score.opponent} namePlayer1={nameGiocatore1} namePlayer2={nameGiocatore2} />
       <PingPong>
         <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
+          {/* pop-up assegnazione punteggio */}
+          {!getCheck && !checkEndGame &&
+
+            <div className="pop-up">
+              <h2>Punto assegnato a: {goal} !</h2>
+              <h3>Punteggio attuale: {score.player} - {score.opponent}</h3>
+              <button onClick={() => { setCheck(true) }} className="btn-pop-up">Continua</button>
+            </div>
+          }
+          {/* pop-up fine partita */}
+          {checkEndGame &&
+            <div className="pop-up">
+              <h2>Game Over!</h2>
+              <h3>Vince : {goal}</h3>
+              <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false); }} className="btn-pop-up">Rivincita</button>
+              <button className="btn-pop-up">Menù Principale</button>
+            </div>}
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -179,25 +196,7 @@ function PingPongPVP() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
-      {/* pop-up assegnazione punteggio */}
-      {!getCheck && !checkEndGame &&
 
-        <div className="pop-up">
-          <h2>Punto assegnato a: {goal} !</h2>
-          <h3>Punteggio attuale: {score.player} - {score.opponent}</h3>
-          <button onClick={() => { setCheck(true) }} className="btn-pop-up">Continua</button>
-        </div>
-      }
-
-
-      {/* pop-up fine partita */}
-      {checkEndGame &&
-        <div className="pop-up">
-          <h2>Game Over!</h2>
-          <h3>Vince : {goal}</h3>
-          <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false);}} className="btn-pop-up">Rivincita</button>
-          <button className="btn-pop-up">Menù Principale</button>
-        </div>}
     </div>
   );
 }

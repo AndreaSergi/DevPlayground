@@ -1,7 +1,7 @@
 .pop-up{
-    position: relative;
-    left: 31%;
-    bottom: 350px;
+    position: absolute;
+
+    top: 125px;
     z-index: 100;
 
     width: 350px;
@@ -9,6 +9,7 @@
 
     border: 2px solid #dbb906;
     border-radius: 16px;
+
     background-color: #292929;
     color: #dbb906;
 
@@ -16,13 +17,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    gap: 8px;
+    align-self: center;
 }
 
 .btn-pop-up{
     background-color: #dbb906;
     color: #292929;
     font-weight: bold;
+    
+    width: 180px;
 }
 

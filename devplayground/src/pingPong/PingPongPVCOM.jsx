@@ -150,7 +150,7 @@ function PingPongPVCOM() {
 
   // SCORE FUNCTION
   const [moltiplicatore, setMoltiplicatore] = useState(1);
-  
+
   // definizione di moltiplicatore 
   let id1 = setInterval(() => {
     setMoltiplicatore(moltiplicatore + 1)
@@ -196,7 +196,14 @@ function PingPongPVCOM() {
     <div tabIndex={0} onKeyDown={handleKeyDown}>
       <SingleScore namePlayer={name} player={`${score}`} />
       <PingPong>
+
         <Campo style={{ width: `${larghezzaCampo}px`, height: `${altezzaCampo}px` }}>
+          {!getCheck && <div className="pop-up">
+            <h2>Game Over!</h2>
+            <h3>Il tuo punteggio: {score}</h3>
+            <button className="btn-pop-up">Menù principale</button>
+            <button className="btn-pop-up" onClick={() => { window.location.reload() }}>Nuova partita</button>
+          </div>}
           <Paddle
             position="left"
             style={{ top: `${paddleLeftY}px`, left: "0" }}
@@ -208,12 +215,7 @@ function PingPongPVCOM() {
           <Ball style={styleMod} />
         </Campo>
       </PingPong>
-      {!getCheck && <div className="pop-up">
-        <h2>Game Over!</h2>
-        <h3>Il tuo punteggio: {score}</h3>
-        <button className="btn-pop-up">Menù principale</button>
-        <button className="btn-pop-up" onClick={() => { window.location.reload() }}>Nuova partita</button>
-      </div>}
+
     </div>
   );
 }

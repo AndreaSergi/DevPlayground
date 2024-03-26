@@ -19,6 +19,8 @@ body {
 }
 
 .campo {
+    display: flex;
+    flex-direction: column;
     position: relative;
     background-color: #13772e;
 }
