@@ -4,7 +4,7 @@
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-  
+
 
 .tastiera{
     display: flex;
@@ -38,13 +38,14 @@
 .button{
     height: 58px;
     width: 58px;
-    background-color: rgb(157, 166, 175);
-    color: white;
-    border-radius: 3px;
-    border: 1px solid white;
+    background-color: rgb(72, 73, 75);
+    color: rgb(146, 146, 146);
+    border-radius: 12px;
+    border: 1px solid rgb(241, 241, 241);
     margin: 2px;
     font-size: 15px;
     font-weight: 600;
+    margin: 4px;
 }
 .button:hover{
     cursor: pointer;
@@ -56,6 +57,35 @@
     display: flex;
     flex-direction: column;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .main-container {
     display: flex;
@@ -78,7 +108,7 @@ h1{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgb(173, 174, 174);
+    border: 2px solid rgb(103, 104, 104);
     border-radius: 6px;
     margin: 5px;
     height: 62px;
@@ -89,6 +119,7 @@ h1{
 
 .wordCellsContainer{
     display: flex;
+    margin-bottom: 6px;
 }
 
 .row{
@@ -98,8 +129,8 @@ h1{
 
 
 .disabledButton{
-    background-color: rgb(48, 48, 48);
-    color: rgb(112, 112, 112);
+    background-color: rgb(24, 24, 24);
+    color: rgb(95, 94, 94);
 }
 
 
@@ -119,4 +150,8 @@ h1{
 .correctButton{
     background-color: green;
     color: white;
+}
+
+.correctButton:hover{
+    background-color: rgb(0, 80, 0);
 }

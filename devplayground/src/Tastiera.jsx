@@ -15,7 +15,7 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
     const rows = [
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
         ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'INVIO', 'DELETE']
+        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', 'INVIO', 'DEL']
     ]
 
 
@@ -408,10 +408,8 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
         "peste", "pesto", "petto", "pezzo", "piace", "piada", "piaga", "piano", "picco", "piede",
         "piega", "piena", "pieve", "pigio", "pigli", "pigna", "pigro", "pinna", "pinne", "pinta",
         "pinza", "pioli", "piove", "pista", "piuma", "pizza", "pizzo", "plebe", "plico", "pochi",
-        "podio", "poema", "poeta", "poggi", "polio", "pollo", "polpa", "polpo", "polso", "pompa",
-        "ponfo", "pongo", "ponte", "poppa", "porci", "porge", "porre", "porro", "porta", "porto",
-        "posai", "posso", "posta", "posto", "pozza", "pozzi", "prato", "preda", "prego", "premi",
-        "presa", "preso", "prete", "prima", "primo", "privo", "probo", "prode", "prole", "prono",
+        "podio", "poema", "poeta", "poggi", "polio", "pollo", "polpa", "polpo", "polso", "pompa", "ponfo", "pongo", "ponte", "poppa", "porci", "porge", "porre", "porro", "porta", "porto",
+        "posai", "posso", "posta", "posto", "pozza", "pozzi", "prato", "preda", "prego", "premi", "presa", "preso", "prete", "prima", "primo", "privo", "probo", "prode", "prole", "prono",
         "prora", "prosa", "prove", "prude", "pruno", "puffi", "pugni", "pulce", "pulsa", "punge",
         "punta", "punti", "purga", "puzzi", "quale", "quasi", "quota", "radio", "raggi", "ragno",
         "rampa", "randa", "rango", "rasoi", "raspa", "raspo", "ratti", "ratto", "rauca", "razza",
@@ -587,7 +585,7 @@ export function Tastiera({onInvio, rowIndex, setRowIndex}){
                             lettera={key}
                             puzza={arrayDiLetterePuzzolenti.includes(key.toLowerCase())}
                             giusta={arrayDiLettereGiuste.includes(key.toLowerCase())}
-                            clickFunction={key === 'INVIO' ? handleInvio : (key === 'DELETE' ? handleDelete : undefined)}
+                            clickFunction={key === 'INVIO' ? handleInvio : (key === 'DEL' ? handleDelete : undefined)}
                         />
                     ))}
                 </div>
