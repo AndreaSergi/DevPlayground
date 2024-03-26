@@ -87,13 +87,15 @@ h1{
 }
 
 
+
 .disabledButton{
-    background-color: red;
-    color: yellow;
+    background-color: rgb(48, 48, 48);
+    color: rgb(112, 112, 112);
 }
 
-.disabledButton:hover{
-    cursor: unset;
-    background-color: red;
-    color: yellow;
+
+
+.correctButton{
+    background-color: green;
+    color: white;
 }
