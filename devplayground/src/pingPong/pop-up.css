@@ -1,7 +1,7 @@
 .pop-up{
-    position: absolute;
-     left: 35vw;
-    top: 40vh;
+    position: relative;
+    left: 31%;
+    bottom: 350px;
     z-index: 100;
 
     width: 350px;

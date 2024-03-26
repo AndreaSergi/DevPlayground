@@ -195,7 +195,7 @@ export function PingPongPVP() {
         <div className="pop-up">
           <h2>Game Over!</h2>
           <h3>Vince : {goal}</h3>
-          <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false);}} className="btn-goal">Rivincita</button>
+          <button onClick={() => { setCheck(true); setScore({ player: 0, opponent: 0 }); setCheckEndGame(false);}} className="btn-pop-up">Rivincita</button>
           <button className="btn-pop-up">Menù Principale</button>
         </div>}
     </div>
