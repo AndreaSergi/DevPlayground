@@ -30,25 +30,38 @@ function PingPongPVCOM() {
     paddlePos,
     paddleHeight,
     paddleWidth,
-    ballSize
+    ballSize,
+    isRightPaddle = false // Aggiungi un nuovo parametro per identificare se è il paddle destro
   ) => {
     const ballLeft = ballPos.x;
     const ballRight = ballPos.x + ballSize;
     const ballTop = ballPos.y;
     const ballBottom = ballPos.y + ballSize;
-
-    const paddleLeft = paddlePos.x;
-    const paddleRight = paddlePos.x + paddleWidth;
+  
+    let paddleLeft = paddlePos.x;
+    let paddleRight = paddlePos.x + paddleWidth;
     const paddleTop = paddlePos.y;
     const paddleBottom = paddlePos.y + paddleHeight;
-
-    return (
-      ballRight >= paddleLeft &&
-      ballLeft <= paddleRight &&
-      ballBottom >= paddleTop &&
-      ballTop <= paddleBottom
-    );
+  
+    // Se è il paddle destro, aggiusta la posizione per il controllo della collisione
+    if (isRightPaddle) {
+      paddleLeft -= paddleWidth; // Sposta il paddleLeft indietro della larghezza del paddle
+      paddleRight -= paddleWidth; // Sposta il paddleRight indietro della larghezza del paddle
+    }
+  
+    const hit = ballRight >= paddleLeft &&
+                ballLeft <= paddleRight &&
+                ballBottom >= paddleTop &&
+                ballTop <= paddleBottom;
+  
+    if (hit) {
+      console.log(`La pallina ha colpito il ${isRightPaddle ? 'paddle destro' : 'paddle sinistro'}!`);
+    }
+  
+    return hit;
   };
+  
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -103,7 +116,8 @@ function PingPongPVCOM() {
             paddleRightPos,
             paddleHeight,
             paddleWidth,
-            ballSize
+            ballSize,
+            true
           )
         ) {
           newLeft = prevLeft;
