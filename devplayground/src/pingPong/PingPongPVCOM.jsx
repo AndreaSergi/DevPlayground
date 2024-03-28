@@ -9,8 +9,8 @@ import { SingleScore } from "./SingleScore";
 import "./pingpong.css";
 
 function PingPongPVCOM() {
-  const larghezzaCampo = 900;
-  const altezzaCampo = 450;
+  const larghezzaCampo = 1175;
+  const altezzaCampo = 575;
   const name = "Giocatore";
   const [getTop, setTop] = useState(50);
   const [getLeft, setLeft] = useState(50);

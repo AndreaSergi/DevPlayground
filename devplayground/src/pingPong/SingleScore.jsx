@@ -21,11 +21,18 @@ export function SingleScore({ player, namePlayer }) {
         display: "flex",
         flexDirection: "horizontal",
       }
+
+      let avatar = {
+        width: "50px",
+        height: "50px",
+        borderRadius: "100%",
+        marginTop: "5px"
+      }
     
       return (
         <div style={scoreStyle}>
           <div style={score}>
-            <img src="vite.svg" alt="avatar pc" />
+            <img style={avatar} src="pingpong/img/avatar1.png" alt="avatar pc" />
             <div style={{marginLeft: "30px"}}>
               <h2>{namePlayer}</h2>
               <h3>{player}</h3>
